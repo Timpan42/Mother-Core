@@ -6,16 +6,14 @@ public class CorePower : MonoBehaviour
 {
     [SerializeField] private float pullForce; 
     [SerializeField] private Transform coreHolder;
-    private AffectedByCore affectScriptInCore;
-
-    private void OnTriggerEnter(Collider collisionObject) {
-        Debug.Log("object is in core range");
-        affectScriptInCore = collisionObject.GetComponent<AffectedByCore>();
-    }
 
     private void OnTriggerStay(Collider collisionObject) {
         Vector3 newDistans = CalculateDistans(collisionObject.transform);
-        affectScriptInCore.pulledByCore(newDistans, pullForce);
+        pullObject(collisionObject.GetComponent<AffectedByCore>(), newDistans);
+    }
+
+    private void pullObject(AffectedByCore collisionObjectScript, Vector3 distans){
+        collisionObjectScript.pulledByCore(distans, pullForce);
     }
 
     private Vector3 CalculateDistans(Transform collisionObject){

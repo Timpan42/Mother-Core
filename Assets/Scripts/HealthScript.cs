@@ -1,0 +1,26 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class HealthScript : MonoBehaviour
+{
+    [SerializeField] private float maxHealth;
+    private float currentHealth;
+
+    private void Start(){
+        currentHealth = maxHealth;
+    }
+
+    public void RemoveHealth(float damage){
+        currentHealth -= damage;
+        if(currentHealth <= 0) {
+            ObjectIsDead();
+        }
+        Debug.Log(currentHealth);
+    }
+
+    private void ObjectIsDead(){
+        Destroy(gameObject);
+    }
+}
