@@ -37,7 +37,16 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Mouse"",
+                    ""name"": ""CameraMoveArrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb925ee0-9e36-42d6-8b4f-7b89a4be0f2a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraMoveMouse"",
                     ""type"": ""Value"",
                     ""id"": ""dc7d34e2-a46c-466a-aa32-2e5c3de4b02d"",
                     ""expectedControlType"": ""Vector2"",
@@ -52,6 +61,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""59388513-4ae7-4c15-b59b-32e54425e9a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeTarget"",
+                    ""type"": ""Value"",
+                    ""id"": ""3468081e-8ea8-4dd6-a3a4-2e65a2bb9c77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CombatMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""013f671c-d3ef-4401-b731-68109e20086c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=1)"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -140,7 +176,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Mouse"",
+                    ""action"": ""CameraMoveMouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -165,6 +201,127 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""CorePower"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Arrow"",
+                    ""id"": ""f2e27d7d-3692-44c7-8847-e4f4206125e6"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMoveArrow"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""9f054699-2674-480a-8e42-6d0b0e0ecfde"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMoveArrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""565c216b-6695-4fae-a430-1218c67086d5"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMoveArrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""93d7fe48-e82e-450d-851c-1067a3dd595d"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMoveArrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""f7a25295-e308-4154-ae99-0a39fb02b011"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMoveArrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4c35ee6-4c3b-446a-be8b-0c767ba4b0c0"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04eea1a5-7159-4d4a-9704-7d442e1082fe"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""bcfbad99-85c1-48ce-b7b2-d7b7ac407724"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeTarget"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""ba26383b-ecdd-4107-bab5-1b7d054ce815"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""83f86b8d-8f37-4c2d-b9ab-5ce6e2c6a8b6"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d59ffc3e-3832-4860-91e3-fce25c7a758e"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CombatMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -174,8 +331,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // PlayerMovement
         m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
         m_PlayerMovement_Move = m_PlayerMovement.FindAction("Move", throwIfNotFound: true);
-        m_PlayerMovement_Mouse = m_PlayerMovement.FindAction("Mouse", throwIfNotFound: true);
+        m_PlayerMovement_CameraMoveArrow = m_PlayerMovement.FindAction("CameraMoveArrow", throwIfNotFound: true);
+        m_PlayerMovement_CameraMoveMouse = m_PlayerMovement.FindAction("CameraMoveMouse", throwIfNotFound: true);
         m_PlayerMovement_CorePower = m_PlayerMovement.FindAction("CorePower", throwIfNotFound: true);
+        m_PlayerMovement_Fire = m_PlayerMovement.FindAction("Fire", throwIfNotFound: true);
+        m_PlayerMovement_ChangeTarget = m_PlayerMovement.FindAction("ChangeTarget", throwIfNotFound: true);
+        m_PlayerMovement_CombatMode = m_PlayerMovement.FindAction("CombatMode", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -238,15 +399,23 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerMovement;
     private List<IPlayerMovementActions> m_PlayerMovementActionsCallbackInterfaces = new List<IPlayerMovementActions>();
     private readonly InputAction m_PlayerMovement_Move;
-    private readonly InputAction m_PlayerMovement_Mouse;
+    private readonly InputAction m_PlayerMovement_CameraMoveArrow;
+    private readonly InputAction m_PlayerMovement_CameraMoveMouse;
     private readonly InputAction m_PlayerMovement_CorePower;
+    private readonly InputAction m_PlayerMovement_Fire;
+    private readonly InputAction m_PlayerMovement_ChangeTarget;
+    private readonly InputAction m_PlayerMovement_CombatMode;
     public struct PlayerMovementActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerMovementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerMovement_Move;
-        public InputAction @Mouse => m_Wrapper.m_PlayerMovement_Mouse;
+        public InputAction @CameraMoveArrow => m_Wrapper.m_PlayerMovement_CameraMoveArrow;
+        public InputAction @CameraMoveMouse => m_Wrapper.m_PlayerMovement_CameraMoveMouse;
         public InputAction @CorePower => m_Wrapper.m_PlayerMovement_CorePower;
+        public InputAction @Fire => m_Wrapper.m_PlayerMovement_Fire;
+        public InputAction @ChangeTarget => m_Wrapper.m_PlayerMovement_ChangeTarget;
+        public InputAction @CombatMode => m_Wrapper.m_PlayerMovement_CombatMode;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -259,12 +428,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Mouse.started += instance.OnMouse;
-            @Mouse.performed += instance.OnMouse;
-            @Mouse.canceled += instance.OnMouse;
+            @CameraMoveArrow.started += instance.OnCameraMoveArrow;
+            @CameraMoveArrow.performed += instance.OnCameraMoveArrow;
+            @CameraMoveArrow.canceled += instance.OnCameraMoveArrow;
+            @CameraMoveMouse.started += instance.OnCameraMoveMouse;
+            @CameraMoveMouse.performed += instance.OnCameraMoveMouse;
+            @CameraMoveMouse.canceled += instance.OnCameraMoveMouse;
             @CorePower.started += instance.OnCorePower;
             @CorePower.performed += instance.OnCorePower;
             @CorePower.canceled += instance.OnCorePower;
+            @Fire.started += instance.OnFire;
+            @Fire.performed += instance.OnFire;
+            @Fire.canceled += instance.OnFire;
+            @ChangeTarget.started += instance.OnChangeTarget;
+            @ChangeTarget.performed += instance.OnChangeTarget;
+            @ChangeTarget.canceled += instance.OnChangeTarget;
+            @CombatMode.started += instance.OnCombatMode;
+            @CombatMode.performed += instance.OnCombatMode;
+            @CombatMode.canceled += instance.OnCombatMode;
         }
 
         private void UnregisterCallbacks(IPlayerMovementActions instance)
@@ -272,12 +453,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Mouse.started -= instance.OnMouse;
-            @Mouse.performed -= instance.OnMouse;
-            @Mouse.canceled -= instance.OnMouse;
+            @CameraMoveArrow.started -= instance.OnCameraMoveArrow;
+            @CameraMoveArrow.performed -= instance.OnCameraMoveArrow;
+            @CameraMoveArrow.canceled -= instance.OnCameraMoveArrow;
+            @CameraMoveMouse.started -= instance.OnCameraMoveMouse;
+            @CameraMoveMouse.performed -= instance.OnCameraMoveMouse;
+            @CameraMoveMouse.canceled -= instance.OnCameraMoveMouse;
             @CorePower.started -= instance.OnCorePower;
             @CorePower.performed -= instance.OnCorePower;
             @CorePower.canceled -= instance.OnCorePower;
+            @Fire.started -= instance.OnFire;
+            @Fire.performed -= instance.OnFire;
+            @Fire.canceled -= instance.OnFire;
+            @ChangeTarget.started -= instance.OnChangeTarget;
+            @ChangeTarget.performed -= instance.OnChangeTarget;
+            @ChangeTarget.canceled -= instance.OnChangeTarget;
+            @CombatMode.started -= instance.OnCombatMode;
+            @CombatMode.performed -= instance.OnCombatMode;
+            @CombatMode.canceled -= instance.OnCombatMode;
         }
 
         public void RemoveCallbacks(IPlayerMovementActions instance)
@@ -298,7 +491,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IPlayerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnMouse(InputAction.CallbackContext context);
+        void OnCameraMoveArrow(InputAction.CallbackContext context);
+        void OnCameraMoveMouse(InputAction.CallbackContext context);
         void OnCorePower(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
+        void OnChangeTarget(InputAction.CallbackContext context);
+        void OnCombatMode(InputAction.CallbackContext context);
     }
 }

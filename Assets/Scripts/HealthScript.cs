@@ -11,7 +11,6 @@ public class HealthScript : MonoBehaviour
     private void Start(){
         currentHealth = maxHealth;
     }
-
     public void RemoveHealth(float damage){
         currentHealth -= damage;
         if(currentHealth <= 0) {
