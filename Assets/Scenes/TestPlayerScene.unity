@@ -132,7 +132,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 483876123}
-  - component: {fileID: 483876126}
   - component: {fileID: 483876125}
   m_Layer: 0
   m_Name: WeaponDetection
@@ -168,33 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609828de49e7a8b4f92ce246cf04ff95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 10.97
-  maxDistance: 0
+  radius: 11
   layerToHit:
     serializedVersion: 2
     m_Bits: 64
   player: {fileID: 1073737505}
---- !u!135 &483876126
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 483876122}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 10
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &609805747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,7 +1231,7 @@ Transform:
   m_GameObject: {fileID: 1635735210}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.3, y: 0, z: 23}
+  m_LocalPosition: {x: -6.51, y: 0, z: 20.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

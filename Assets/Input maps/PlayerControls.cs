@@ -76,7 +76,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""ChangeTarget"",
                     ""type"": ""Value"",
                     ""id"": ""3468081e-8ea8-4dd6-a3a4-2e65a2bb9c77"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
