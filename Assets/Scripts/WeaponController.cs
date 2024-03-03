@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Video;
 
 
-public class WeaponDetection : MonoBehaviour
+public class WeaponController : MonoBehaviour
 {
     private PlayerControls playerInputMap;
     private InputAction fireInput;
