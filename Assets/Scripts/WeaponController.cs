@@ -24,6 +24,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float radius;
     [SerializeField] private LayerMask layerToHit;
     [SerializeField] private Transform player;
+    [SerializeField] private WeaponFire weaponFire;
     private Collider[] hitCollider = new Collider[10];
     private int numberOfColliders;
     private int prevNumberOfColliders;
@@ -31,6 +32,9 @@ public class WeaponController : MonoBehaviour
     private bool switchFocusTarget = true;
     private Collider getFocusedObjectCollider = null;
     private int focusOnObject = 0;
+
+    [SerializeField] private float shootCoolDown;
+    private float shootCoolDownTimer;
 
     private void Awake()
     {
@@ -72,8 +76,16 @@ public class WeaponController : MonoBehaviour
             FocusObject();
 
             FireAtTarget();
-            FireCoolDown();
         }
+        if (!abilityToFire)
+        {
+            shootCoolDownTimer -= Time.deltaTime;
+        }
+        if (shootCoolDownTimer <= 0)
+        {
+            abilityToFire = true;
+        }
+
     }
 
     private void ClearArrayOnObjectExit()
@@ -81,7 +93,6 @@ public class WeaponController : MonoBehaviour
         for (int i = 0; i < prevNumberOfColliders; i++)
         {
             hitCollider[i] = null;
-            Debug.Log("Clear");
         }
     }
 
@@ -98,11 +109,9 @@ public class WeaponController : MonoBehaviour
     {
         if (fireInput.WasPerformedThisFrame())
         {
-            abilityToFire = true;
-            
-            // ask weapon script to attack 
-            
+            weaponFire.ActivateRocket(getFocusedObjectCollider);
             Debug.Log("FIRE!!!!");
+            FireCoolDown();
         }
     }
 
@@ -110,7 +119,8 @@ public class WeaponController : MonoBehaviour
     {
         if (abilityToFire)
         {
-            // ask weapon script for cool down
+            abilityToFire = false;
+            shootCoolDownTimer = shootCoolDown;
         }
     }
 
@@ -195,12 +205,6 @@ public class WeaponController : MonoBehaviour
 
     private void changeObject()
     {
-
-        // om spelaren focusera redan på ett object hitta dens index i array
-        // bytt utt focusOnObject numer till dens index 
-
-        // om spelaren trycker Q eller E ändra focus start från 0  
-
         if (changeTargetInputValue > 0)
         {
             focusOnObject++;
