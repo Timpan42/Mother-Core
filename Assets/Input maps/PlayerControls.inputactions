@@ -51,13 +51,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ChangeTarget",
-                    "type": "Value",
-                    "id": "3468081e-8ea8-4dd6-a3a4-2e65a2bb9c77",
-                    "expectedControlType": "Axis",
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "a03007b1-fc05-4cba-9d15-de79ef6a3e74",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "CombatMode",
@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "Press(behavior=1)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeTarget",
+                    "type": "Value",
+                    "id": "3468081e-8ea8-4dd6-a3a4-2e65a2bb9c77",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -289,6 +298,17 @@
                     "action": "ChangeTarget",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e1f0198e-d556-4daa-bb97-bf6ad58e7a3e",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

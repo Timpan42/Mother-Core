@@ -1,26 +1,21 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.Video;
 
 
 public class WeaponController : MonoBehaviour
 {
+    // input variables 
     private PlayerControls playerInputMap;
     private InputAction fireInput;
     private InputAction changeTargetInput;
     private InputAction combatModeInput;
-
+    private InputAction reloadInput;
     private bool abilityToFire = false;
     private float changeTargetInputValue;
     private bool combatMode = false;
 
+    // check for enemies variables 
     [SerializeField] private float radius;
     [SerializeField] private LayerMask layerToHit;
     [SerializeField] private Transform player;
@@ -29,10 +24,12 @@ public class WeaponController : MonoBehaviour
     private int numberOfColliders;
     private int prevNumberOfColliders;
 
+    // focus variables 
     private bool switchFocusTarget = true;
-    private Collider getFocusedObjectCollider = null;
-    private int focusOnObject = 0;
+    private Collider focusObject;
+    private int intFocusOnObject = 0;
 
+    // shoot variables 
     [SerializeField] private float shootCoolDown;
     private float shootCoolDownTimer;
 
@@ -46,9 +43,11 @@ public class WeaponController : MonoBehaviour
         fireInput = playerInputMap.PlayerMovement.Fire;
         changeTargetInput = playerInputMap.PlayerMovement.ChangeTarget;
         combatModeInput = playerInputMap.PlayerMovement.CombatMode;
+        reloadInput = playerInputMap.PlayerMovement.Reload;
         fireInput.Enable();
         changeTargetInput.Enable();
         combatModeInput.Enable();
+        reloadInput.Enable();
     }
 
     // See radius
@@ -59,6 +58,7 @@ public class WeaponController : MonoBehaviour
     }
     private void Update()
     {
+        ReloadWeaponHolder();
 
         ActivateCombatMode();
 
@@ -81,11 +81,35 @@ public class WeaponController : MonoBehaviour
         {
             shootCoolDownTimer -= Time.deltaTime;
         }
-        if (shootCoolDownTimer <= 0)
+        if (shootCoolDownTimer < 0)
         {
             abilityToFire = true;
         }
 
+    }
+
+    private void ReloadWeaponHolder()
+    {
+        if (reloadInput.WasPressedThisFrame())
+        {
+            weaponFire.Reload();
+        }
+    }
+
+    private void ActivateCombatMode()
+    {
+        if (combatModeInput.WasPerformedThisFrame())
+        {
+            combatMode = !combatMode;
+            if (combatMode)
+            {
+                Debug.Log("combatMode active");
+            }
+            else
+            {
+                Debug.Log("combatMode deactivated");
+            }
+        }
     }
 
     private void ClearArrayOnObjectExit()
@@ -96,22 +120,20 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    private void ActivateCombatMode()
-    {
-        if (combatModeInput.WasPerformedThisFrame())
-        {
-            combatMode = !combatMode;
-            Debug.Log("combatMode active");
-        }
-    }
-
     private void FireAtTarget()
     {
         if (fireInput.WasPerformedThisFrame())
         {
-            weaponFire.ActivateRocket(getFocusedObjectCollider);
-            Debug.Log("FIRE!!!!");
-            FireCoolDown();
+            if (abilityToFire && focusObject != null)
+            {
+                weaponFire.ActivateRocket(focusObject);
+                Debug.Log("FIRE!!!!");
+                FireCoolDown();
+            }
+            else
+            {
+                Debug.Log("Cant fire at target");
+            }
         }
     }
 
@@ -183,23 +205,23 @@ public class WeaponController : MonoBehaviour
 
         if (switchFocusTarget)
         {
-            getFocusedObjectCollider = hitCollider[focusOnObject];
+            focusObject = hitCollider[intFocusOnObject];
             switchFocusTarget = false;
         }
 
-        if (hitCollider[focusOnObject] != null)
+        if (hitCollider[intFocusOnObject] != null)
         {
             if (!switchFocusTarget)
             {
                 FindOriginalFocusTarget();
             }
 
-            Debug.DrawLine(player.position, hitCollider[focusOnObject].transform.position, Color.red);
+            Debug.DrawLine(player.position, hitCollider[intFocusOnObject].transform.position, Color.red);
         }
         else
         {
             switchFocusTarget = true;
-            focusOnObject = 0;
+            intFocusOnObject = 0;
         }
     }
 
@@ -207,21 +229,21 @@ public class WeaponController : MonoBehaviour
     {
         if (changeTargetInputValue > 0)
         {
-            focusOnObject++;
+            intFocusOnObject++;
 
-            if (focusOnObject > numberOfColliders - 1)
+            if (intFocusOnObject > numberOfColliders - 1)
             {
-                focusOnObject = 0;
+                intFocusOnObject = 0;
             }
 
             changeTargetInputValue = 0;
         }
         else if (changeTargetInputValue < 0)
         {
-            focusOnObject--;
-            if (focusOnObject < 0)
+            intFocusOnObject--;
+            if (intFocusOnObject < 0)
             {
-                focusOnObject = numberOfColliders - 1;
+                intFocusOnObject = numberOfColliders - 1;
             }
 
             changeTargetInputValue = 0;
@@ -232,11 +254,12 @@ public class WeaponController : MonoBehaviour
     {
         for (int i = 0; i < numberOfColliders; i++)
         {
-            if (getFocusedObjectCollider == hitCollider[i])
+            if (focusObject == hitCollider[i])
             {
-                focusOnObject = i;
+                intFocusOnObject = i;
                 break;
             }
         }
     }
+
 }
