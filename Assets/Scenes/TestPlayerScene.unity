@@ -414,6 +414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammo: {fileID: 11400000, guid: 27f9e7ca962f51a438bc50073d9bf474, type: 2}
   ammoHolder: {fileID: 440702157}
+  reloadTimer: 2
 --- !u!1 &483876122
 GameObject:
   m_ObjectHideFlags: 0

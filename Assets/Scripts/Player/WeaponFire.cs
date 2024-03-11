@@ -9,10 +9,13 @@ public class WeaponFire : MonoBehaviour
 {
     [SerializeField] Ammo ammo;
     [SerializeField] Transform ammoHolder;
+    [SerializeField] private float reloadTimer;
     private ProjectileLogic bulletScript = null;
     private int ammoHolderCounter;
     private int ammoIndex = 0;
     private Collider enemyTarget;
+    private WaitForSeconds seconds = new WaitForSeconds(1);
+    private bool reloading = false;
 
     private void Start()
     {
@@ -72,7 +75,32 @@ public class WeaponFire : MonoBehaviour
 
     public void Reload()
     {
-        ammoIndex = 0;
+        Debug.Log(reloading);
+        if (reloading)
+        {
+            Debug.Log("Wait for reload");
+        }
+        else
+        {
+            Debug.Log("Reloading");
+            StartCoroutine(ReloadTimer());
+            ammoIndex = 0;
+            reloading = true;
+        }
+    }
+
+    private IEnumerator ReloadTimer()
+    {
+        float counter = reloadTimer;
+        while (counter > 0)
+        {
+            yield return seconds;
+            Debug.Log("counting");
+            counter--;
+        }
+        reloading = false;
+        Debug.Log("Hello");
+        yield return null;
     }
 
 }
