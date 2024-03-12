@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine.Utility;
 using UnityEngine;
 
 public class ProjectileLogic : MonoBehaviour
@@ -8,6 +9,7 @@ public class ProjectileLogic : MonoBehaviour
     private Transform enemyTarget;
     private Transform player;
     private bool activeBullet;
+    private float damage;
 
     private void Start()
     {
@@ -29,22 +31,25 @@ public class ProjectileLogic : MonoBehaviour
         }
     }
 
-    public void FollowTarget(Transform target)
+    public void FollowTarget(Transform target, float totalDamage)
     {
         enemyTarget = target;
+        damage = totalDamage;
         activeBullet = true;
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (other.tag == "Enemy")
+        if (collider.tag == "Enemy")
         {
-            OnImpact();
+            OnImpact(collider);
         }
     }
-    private void OnImpact()
+    private void OnImpact(Collider collider)
     {
         activeBullet = false;
+        collider.GetComponent<HealthScript>().RemoveHealth(damage);
         transform.position = player.position;
         transform.gameObject.SetActive(false);
     }

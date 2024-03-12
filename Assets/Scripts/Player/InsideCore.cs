@@ -11,30 +11,37 @@ public class InsideCore : MonoBehaviour
     private float currentTimer;
     private bool collisionObjectTakeDamage = false;
 
-    private void Update() {
+    private void Update()
+    {
         StartDamageObjectTimer();
     }
-    
-    private void StartDamageObjectTimer(){
-        if (currentTimer <= 0){
+
+    private void StartDamageObjectTimer()
+    {
+        if (currentTimer <= 0)
+        {
             collisionObjectTakeDamage = true;
         }
-        else{
+        else
+        {
             collisionObjectTakeDamage = false;
-            currentTimer -= Time.deltaTime; 
+            currentTimer -= Time.deltaTime;
         }
     }
 
-    private void OnTriggerStay(Collider collisionObject) {
-        if(collisionObjectTakeDamage){
+    private void OnTriggerStay(Collider collisionObject)
+    {
+        if (collisionObjectTakeDamage && collisionObject.CompareTag("Enemy"))
+        {
             DamageObject(collisionObject.GetComponent<HealthScript>());
             currentTimer = damageTimer;
         }
     }
 
-    
 
-    private void DamageObject(HealthScript collisionObjectHealthScript){
+
+    private void DamageObject(HealthScript collisionObjectHealthScript)
+    {
         collisionObjectHealthScript.RemoveHealth(damage);
     }
 }

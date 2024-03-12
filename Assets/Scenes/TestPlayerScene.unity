@@ -415,6 +415,7 @@ MonoBehaviour:
   ammo: {fileID: 11400000, guid: 27f9e7ca962f51a438bc50073d9bf474, type: 2}
   ammoHolder: {fileID: 440702157}
   reloadTimer: 2
+  weaponDamage: 2
 --- !u!1 &483876122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,6 +1103,7 @@ GameObject:
   - component: {fileID: 1073737506}
   - component: {fileID: 1073737507}
   - component: {fileID: 1073737508}
+  - component: {fileID: 1073737509}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1254,6 +1256,19 @@ MonoBehaviour:
   mouseControlsActive: 0
   xTurnSpeed: 10
   yTurnSpeed: 10
+--- !u!114 &1073737509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073737501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593c9cb7a2e4f714c9eb8454dc583cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
 --- !u!1 &1256413809
 GameObject:
   m_ObjectHideFlags: 0

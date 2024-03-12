@@ -10,12 +10,16 @@ public class WeaponFire : MonoBehaviour
     [SerializeField] Ammo ammo;
     [SerializeField] Transform ammoHolder;
     [SerializeField] private float reloadTimer;
+    [SerializeField] private float weaponDamage;
+    private float totalDamage;
     private ProjectileLogic bulletScript = null;
     private int ammoHolderCounter;
     private int ammoIndex = 0;
     private Collider enemyTarget;
     private WaitForSeconds seconds = new WaitForSeconds(1);
     private bool reloading = false;
+
+
 
     private void Start()
     {
@@ -30,6 +34,7 @@ public class WeaponFire : MonoBehaviour
         enemyTarget = target;
         GetBullet();
         ChangeBulletsAmmoClass();
+        CalculateDamage();
         SendTarget();
     }
 
@@ -57,9 +62,14 @@ public class WeaponFire : MonoBehaviour
         bulletScript.ammo = ammo;
     }
 
+    private void CalculateDamage()
+    {
+        totalDamage = weaponDamage;
+    }
+
     private void SendTarget()
     {
-        bulletScript.FollowTarget(enemyTarget.transform);
+        bulletScript.FollowTarget(enemyTarget.transform, totalDamage);
         IncreaseAmmoIndex();
     }
 
