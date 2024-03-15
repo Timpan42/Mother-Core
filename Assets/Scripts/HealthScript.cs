@@ -8,18 +8,22 @@ public class HealthScript : MonoBehaviour
     [SerializeField] private float maxHealth;
     private float currentHealth;
 
-    private void Start(){
+    private void Start()
+    {
         currentHealth = maxHealth;
     }
-    public void RemoveHealth(float damage){
+    public void RemoveHealth(float damage)
+    {
         currentHealth -= damage;
-        if(currentHealth <= 0) {
+        if (currentHealth <= 0)
+        {
             ObjectIsDead();
         }
         Debug.Log(currentHealth);
     }
 
-    private void ObjectIsDead(){
-        Destroy(gameObject);
+    private void ObjectIsDead()
+    {
+        gameObject.SetActive(false);
     }
 }

@@ -7,13 +7,13 @@ public class ProjectileLogic : MonoBehaviour
 {
     public Ammo ammo { get; set; }
     private Transform enemyTarget;
-    private Transform player;
+    private Transform parent;
     private bool activeBullet;
     private float damage;
 
     private void Start()
     {
-        player = transform.root.GetComponent<Transform>();
+        parent = transform.root.GetComponent<Transform>();
         gameObject.SetActive(false);
     }
 
@@ -42,8 +42,9 @@ public class ProjectileLogic : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Enemy")
+        if (collider.CompareTag("Enemy") || collider.CompareTag("Player"))
         {
+            Debug.Log("Collided");
             OnImpact(collider);
         }
     }
@@ -51,7 +52,7 @@ public class ProjectileLogic : MonoBehaviour
     {
         activeBullet = false;
         collider.GetComponent<HealthScript>().RemoveHealth(damage);
-        transform.position = player.position;
+        transform.position = parent.position;
         transform.gameObject.SetActive(false);
     }
 }

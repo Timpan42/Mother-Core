@@ -7,6 +7,8 @@ public class CorePower : MonoBehaviour
     [SerializeField] private float pullForce; 
     [SerializeField] private Transform coreHolder;
 
+    //needs to see if it is a enemy
+
     private void OnTriggerStay(Collider collisionObject) {
         Vector3 newDistans = CalculateDistans(collisionObject.transform);
         pullObject(collisionObject.GetComponent<AffectedByCore>(), newDistans);

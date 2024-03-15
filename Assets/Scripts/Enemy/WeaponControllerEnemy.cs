@@ -15,7 +15,7 @@ public class WeaponControllerEnemy : MonoBehaviour
     [SerializeField] private float minimalDistends;
 
     private float distanceFromPlayer;
-    private Collider[] hitCollider = new Collider[10];
+    private Collider[] hitCollider = new Collider[1];
     private int numberOfColliders;
     private int prevNumberOfColliders;
     private bool combatMode = false;
@@ -61,7 +61,7 @@ public class WeaponControllerEnemy : MonoBehaviour
             combatMode = true;
             if (prevNumberOfColliders != numberOfColliders)
             {
-                ClearArrayOnObjectExit();
+                //ClearArrayOnObjectExit();
                 prevNumberOfColliders = numberOfColliders;
             }
 
@@ -194,11 +194,9 @@ public class WeaponControllerEnemy : MonoBehaviour
         }
     }
 
-    // can be used if the enemy also has enemies  
     private void FocusObject()
     {
-
-        if (hitCollider[0])
+        if (hitCollider[0] != null || focusObject == null)
         {
             switchFocusTarget = true;
         }
