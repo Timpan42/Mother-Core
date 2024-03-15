@@ -14,6 +14,7 @@ public class ProjectileLogic : MonoBehaviour
     private void Start()
     {
         player = transform.root.GetComponent<Transform>();
+        gameObject.SetActive(false);
     }
 
     void Update()

@@ -3,26 +3,22 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class WeaponController : MonoBehaviour
+public class WeaponControllerEnemy : MonoBehaviour
 {
-    // input variables 
-    private PlayerControls playerInputMap;
-    private InputAction fireInput;
-    private InputAction changeTargetInput;
-    private InputAction combatModeInput;
-    private InputAction reloadInput;
-    private bool abilityToFire = false;
-    private float changeTargetInputValue;
-    private bool combatMode = false;
 
     // check for enemies variables 
     [SerializeField] private float radius;
     [SerializeField] private LayerMask layerToHit;
-    [SerializeField] private Transform parent;
     [SerializeField] private WeaponFire weaponFire;
+    [SerializeField] private Transform parent;
+    [SerializeField] private Transform player;
+    [SerializeField] private float minimalDistends;
+
+    private float distanceFromPlayer;
     private Collider[] hitCollider = new Collider[10];
     private int numberOfColliders;
     private int prevNumberOfColliders;
+    private bool combatMode = false;
 
     // focus variables 
     private bool switchFocusTarget = true;
@@ -32,23 +28,20 @@ public class WeaponController : MonoBehaviour
     // shoot variables 
     [SerializeField] private float shootCoolDown;
     private float shootCoolDownTimer;
+    private bool abilityToFire = false;
 
-    private void Awake()
+    //Reload variables 
+    [SerializeField] private float outOfCombatCoolDown;
+    private float outOfCombatTimer;
+    private bool isOutOfCombat = false;
+    private bool canReload = false;
+
+
+    private void Start()
     {
-        playerInputMap = new PlayerControls();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    private void OnEnable()
-    {
-        fireInput = playerInputMap.PlayerMovement.Fire;
-        changeTargetInput = playerInputMap.PlayerMovement.ChangeTarget;
-        combatModeInput = playerInputMap.PlayerMovement.CombatMode;
-        reloadInput = playerInputMap.PlayerMovement.Reload;
-        fireInput.Enable();
-        changeTargetInput.Enable();
-        combatModeInput.Enable();
-        reloadInput.Enable();
-    }
 
     // See radius
     private void OnDrawGizmos()
@@ -60,10 +53,12 @@ public class WeaponController : MonoBehaviour
     {
         ReloadWeaponHolder();
 
-        ActivateCombatMode();
 
-        if (combatMode)
+        // activate when player is (value) away
+        distanceFromPlayer = Vector3.Distance(transform.position, player.position);
+        if (distanceFromPlayer < minimalDistends)
         {
+            combatMode = true;
             if (prevNumberOfColliders != numberOfColliders)
             {
                 ClearArrayOnObjectExit();
@@ -74,9 +69,38 @@ public class WeaponController : MonoBehaviour
 
             SortArrayByDistends();
             FocusObject();
-
             FireAtTarget();
         }
+        else
+        {
+            combatMode = false;
+        }
+        ReloadTimer();
+        ShootTimer();
+    }
+
+
+    private void ReloadTimer()
+    {
+        if (!isOutOfCombat)
+        {
+            outOfCombatTimer -= Time.deltaTime;
+        }
+        if (outOfCombatTimer < 0)
+        {
+            isOutOfCombat = true;
+        }
+    }
+    private void ReloadWeaponHolder()
+    {
+        if (canReload && isOutOfCombat)
+        {
+            weaponFire.Reload();
+        }
+    }
+
+    private void ShootTimer()
+    {
         if (!abilityToFire)
         {
             shootCoolDownTimer -= Time.deltaTime;
@@ -84,31 +108,6 @@ public class WeaponController : MonoBehaviour
         if (shootCoolDownTimer < 0)
         {
             abilityToFire = true;
-        }
-
-    }
-
-    private void ReloadWeaponHolder()
-    {
-        if (reloadInput.WasPressedThisFrame())
-        {
-            weaponFire.Reload();
-        }
-    }
-
-    private void ActivateCombatMode()
-    {
-        if (combatModeInput.WasPerformedThisFrame())
-        {
-            combatMode = !combatMode;
-            if (combatMode)
-            {
-                Debug.Log("combatMode active");
-            }
-            else
-            {
-                Debug.Log("combatMode deactivated");
-            }
         }
     }
 
@@ -122,12 +121,14 @@ public class WeaponController : MonoBehaviour
 
     private void FireAtTarget()
     {
-        if (fireInput.WasPerformedThisFrame())
+        // if player is focus fire 
+        if (focusObject != null)
         {
             if (abilityToFire && focusObject != null)
             {
                 weaponFire.ActivateRocket(focusObject);
                 Debug.Log("FIRE!!!!");
+                canReload = true;
                 FireCoolDown();
             }
             else
@@ -193,14 +194,13 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+    // can be used if the enemy also has enemies  
     private void FocusObject()
     {
 
-        if (changeTargetInput.WasPressedThisFrame())
+        if (hitCollider[0])
         {
-            changeTargetInputValue = changeTargetInput.ReadValue<float>();
             switchFocusTarget = true;
-            changeObject();
         }
 
         if (switchFocusTarget)
@@ -225,31 +225,6 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    private void changeObject()
-    {
-        if (changeTargetInputValue > 0)
-        {
-            intFocusOnObject++;
-
-            if (intFocusOnObject > numberOfColliders - 1)
-            {
-                intFocusOnObject = 0;
-            }
-
-            changeTargetInputValue = 0;
-        }
-        else if (changeTargetInputValue < 0)
-        {
-            intFocusOnObject--;
-            if (intFocusOnObject < 0)
-            {
-                intFocusOnObject = numberOfColliders - 1;
-            }
-
-            changeTargetInputValue = 0;
-        }
-    }
-
     private void FindOriginalFocusTarget()
     {
         for (int i = 0; i < numberOfColliders; i++)
@@ -261,5 +236,4 @@ public class WeaponController : MonoBehaviour
             }
         }
     }
-
 }
