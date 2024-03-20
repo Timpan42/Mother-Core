@@ -44,7 +44,6 @@ public class ProjectileLogic : MonoBehaviour
     {
         if (collider.CompareTag("Enemy") || collider.CompareTag("Player"))
         {
-            Debug.Log("Collided");
             OnImpact(collider);
         }
     }

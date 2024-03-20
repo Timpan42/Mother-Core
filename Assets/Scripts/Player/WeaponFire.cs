@@ -85,14 +85,8 @@ public class WeaponFire : MonoBehaviour
 
     public void Reload()
     {
-        Debug.Log(reloading);
-        if (reloading)
+        if (!reloading)
         {
-            Debug.Log("Wait for reload");
-        }
-        else
-        {
-            Debug.Log("Reloading");
             StartCoroutine(ReloadTimer());
             ammoIndex = 0;
             reloading = true;
@@ -105,11 +99,9 @@ public class WeaponFire : MonoBehaviour
         while (counter > 0)
         {
             yield return seconds;
-            Debug.Log("counting");
             counter--;
         }
         reloading = false;
-        Debug.Log("Hello");
         yield return null;
     }
 

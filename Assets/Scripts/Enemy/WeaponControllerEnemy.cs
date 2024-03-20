@@ -127,13 +127,8 @@ public class WeaponControllerEnemy : MonoBehaviour
             if (abilityToFire && focusObject != null)
             {
                 weaponFire.ActivateRocket(focusObject);
-                Debug.Log("FIRE!!!!");
                 canReload = true;
                 FireCoolDown();
-            }
-            else
-            {
-                Debug.Log("Cant fire at target");
             }
         }
     }

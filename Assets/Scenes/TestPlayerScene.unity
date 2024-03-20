@@ -593,7 +593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 675dfe3c61e49a7e9a0a19e4141f5dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pullForce: 0
+  pullForce: 0.5
   coreHolder: {fileID: 1273383653}
 --- !u!1001 &702735134
 PrefabInstance:
@@ -1406,7 +1406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   damageTimer: 1
-  corePower: {fileID: 0}
+  corePower: {fileID: 609805753}
 --- !u!1 &1315799167
 GameObject:
   m_ObjectHideFlags: 3
@@ -1536,7 +1536,7 @@ MonoBehaviour:
   ammo: {fileID: 11400000, guid: 27f9e7ca962f51a438bc50073d9bf474, type: 2}
   ammoHolder: {fileID: 1597551893}
   reloadTimer: 2
-  weaponDamage: 1
+  weaponDamage: 0
 --- !u!4 &1597551893
 Transform:
   m_ObjectHideFlags: 0

@@ -37,7 +37,6 @@ public class InsideCore : MonoBehaviour
     {
         if (inputCorePower.WasPressedThisFrame())
         {
-            Debug.Log(activeCore);
             corePower.ActivateCore();
             activeCore = !activeCore;
         }

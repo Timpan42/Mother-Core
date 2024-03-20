@@ -18,7 +18,10 @@ public class CorePower : MonoBehaviour
         else if (activateCorePower)
         {
             Vector3 newDistans = CalculateDistans(collisionObject.transform);
-            pullObject(collisionObject.GetComponent<AffectedByCore>(), newDistans);
+            if (collisionObject.GetComponent<AffectedByCore>())
+            {
+                pullObject(collisionObject.GetComponent<AffectedByCore>(), newDistans);
+            }
         }
     }
 
@@ -39,7 +42,6 @@ public class CorePower : MonoBehaviour
 
     public void ActivateCore()
     {
-        Debug.Log(activateCorePower);
         activateCorePower = !activateCorePower;
     }
 }
