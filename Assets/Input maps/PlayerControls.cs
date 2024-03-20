@@ -73,13 +73,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ChangeTarget"",
-                    ""type"": ""Value"",
-                    ""id"": ""3468081e-8ea8-4dd6-a3a4-2e65a2bb9c77"",
-                    ""expectedControlType"": ""Axis"",
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""a03007b1-fc05-4cba-9d15-de79ef6a3e74"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""CombatMode"",
@@ -89,6 +89,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=1)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeTarget"",
+                    ""type"": ""Value"",
+                    ""id"": ""3468081e-8ea8-4dd6-a3a4-2e65a2bb9c77"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -314,6 +323,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e1f0198e-d556-4daa-bb97-bf6ad58e7a3e"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""d59ffc3e-3832-4860-91e3-fce25c7a758e"",
                     ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
@@ -335,8 +355,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerMovement_CameraMoveMouse = m_PlayerMovement.FindAction("CameraMoveMouse", throwIfNotFound: true);
         m_PlayerMovement_CorePower = m_PlayerMovement.FindAction("CorePower", throwIfNotFound: true);
         m_PlayerMovement_Fire = m_PlayerMovement.FindAction("Fire", throwIfNotFound: true);
-        m_PlayerMovement_ChangeTarget = m_PlayerMovement.FindAction("ChangeTarget", throwIfNotFound: true);
+        m_PlayerMovement_Reload = m_PlayerMovement.FindAction("Reload", throwIfNotFound: true);
         m_PlayerMovement_CombatMode = m_PlayerMovement.FindAction("CombatMode", throwIfNotFound: true);
+        m_PlayerMovement_ChangeTarget = m_PlayerMovement.FindAction("ChangeTarget", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -403,8 +424,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovement_CameraMoveMouse;
     private readonly InputAction m_PlayerMovement_CorePower;
     private readonly InputAction m_PlayerMovement_Fire;
-    private readonly InputAction m_PlayerMovement_ChangeTarget;
+    private readonly InputAction m_PlayerMovement_Reload;
     private readonly InputAction m_PlayerMovement_CombatMode;
+    private readonly InputAction m_PlayerMovement_ChangeTarget;
     public struct PlayerMovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -414,8 +436,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @CameraMoveMouse => m_Wrapper.m_PlayerMovement_CameraMoveMouse;
         public InputAction @CorePower => m_Wrapper.m_PlayerMovement_CorePower;
         public InputAction @Fire => m_Wrapper.m_PlayerMovement_Fire;
-        public InputAction @ChangeTarget => m_Wrapper.m_PlayerMovement_ChangeTarget;
+        public InputAction @Reload => m_Wrapper.m_PlayerMovement_Reload;
         public InputAction @CombatMode => m_Wrapper.m_PlayerMovement_CombatMode;
+        public InputAction @ChangeTarget => m_Wrapper.m_PlayerMovement_ChangeTarget;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -440,12 +463,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
-            @ChangeTarget.started += instance.OnChangeTarget;
-            @ChangeTarget.performed += instance.OnChangeTarget;
-            @ChangeTarget.canceled += instance.OnChangeTarget;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
             @CombatMode.started += instance.OnCombatMode;
             @CombatMode.performed += instance.OnCombatMode;
             @CombatMode.canceled += instance.OnCombatMode;
+            @ChangeTarget.started += instance.OnChangeTarget;
+            @ChangeTarget.performed += instance.OnChangeTarget;
+            @ChangeTarget.canceled += instance.OnChangeTarget;
         }
 
         private void UnregisterCallbacks(IPlayerMovementActions instance)
@@ -465,12 +491,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
-            @ChangeTarget.started -= instance.OnChangeTarget;
-            @ChangeTarget.performed -= instance.OnChangeTarget;
-            @ChangeTarget.canceled -= instance.OnChangeTarget;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
             @CombatMode.started -= instance.OnCombatMode;
             @CombatMode.performed -= instance.OnCombatMode;
             @CombatMode.canceled -= instance.OnCombatMode;
+            @ChangeTarget.started -= instance.OnChangeTarget;
+            @ChangeTarget.performed -= instance.OnChangeTarget;
+            @ChangeTarget.canceled -= instance.OnChangeTarget;
         }
 
         public void RemoveCallbacks(IPlayerMovementActions instance)
@@ -495,7 +524,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnCameraMoveMouse(InputAction.CallbackContext context);
         void OnCorePower(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
-        void OnChangeTarget(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
         void OnCombatMode(InputAction.CallbackContext context);
+        void OnChangeTarget(InputAction.CallbackContext context);
     }
 }

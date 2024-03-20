@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -8,57 +9,100 @@ public class WeaponFire : MonoBehaviour
 {
     [SerializeField] Ammo ammo;
     [SerializeField] Transform ammoHolder;
-    private GameObject ammoObject = null;
+    [SerializeField] private float reloadTimer;
+    [SerializeField] private float weaponDamage;
+    private float totalDamage;
+    private ProjectileLogic bulletScript = null;
+    private int ammoHolderCounter;
+    private int ammoIndex = 0;
     private Collider enemyTarget;
-    private bool activeRocket = false;
+    private WaitForSeconds seconds = new WaitForSeconds(1);
+    private bool reloading = false;
 
-    private void Update()
+
+
+    private void Start()
     {
-        if (activeRocket)
-        {
-            SendTargetPosition();
-        }
+        ammoHolderCounter = ammoHolder.childCount;
     }
-
     public void ActivateRocket(Collider target)
     {
-
         if (target == null)
         {
-            Debug.Log("No target");
             return;
         }
-
         enemyTarget = target;
+        GetBullet();
+        ChangeBulletsAmmoClass();
+        CalculateDamage();
+        SendTarget();
+    }
 
-        foreach (GameObject ammunition in ammoHolder)
+    private void GetBullet()
+    {
+        Transform bullet = ammoHolder.GetChild(ammoIndex);
+        if (bullet != null)
         {
-            if (ammunition.activeSelf == true)
+            bullet.gameObject.SetActive(true);
+            if (bullet.GetComponent<ProjectileLogic>() != null)
             {
-                ammoObject = ammunition;
-                break;
+                bulletScript = bullet.GetComponent<ProjectileLogic>();
+                return;
             }
-        }
-
-        if (ammoObject != null)
-        {
-            ammoObject.GetComponent<ProjectileLogic>().ammo = ammo;
-            activeRocket = true;
         }
         else
         {
-            Debug.Log("No rocket found/active");
+            Debug.Log("No projectile found/active or is just not a projectile");
+        }
+
+    }
+
+    private void ChangeBulletsAmmoClass()
+    {
+        bulletScript.ammo = ammo;
+    }
+
+    private void CalculateDamage()
+    {
+        totalDamage = weaponDamage;
+    }
+
+    private void SendTarget()
+    {
+        bulletScript.FollowTarget(enemyTarget.transform, totalDamage);
+        IncreaseAmmoIndex();
+    }
+
+    private void IncreaseAmmoIndex()
+    {
+        ammoIndex++;
+        if (ammoIndex >= ammoHolderCounter)
+        {
+            Reload();
+        }
+
+    }
+
+    public void Reload()
+    {
+        if (!reloading)
+        {
+            StartCoroutine(ReloadTimer());
+            ammoIndex = 0;
+            reloading = true;
         }
     }
 
-    private void SendTargetPosition()
+    private IEnumerator ReloadTimer()
     {
-        // send information to ProjectileLogic so the rocket can move to target 
-    }
-
-    private void Reload()
-    {
-        // reload when ammoHolders children is all inactive or when reload button is pressed
+        float counter = reloadTimer;
+        while (counter > 0)
+        {
+            yield return seconds;
+            counter--;
+        }
+        reloading = false;
+        yield return null;
     }
 
 }

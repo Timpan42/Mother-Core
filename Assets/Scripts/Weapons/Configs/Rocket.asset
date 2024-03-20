@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a882c51672dd974989ea86dc2778f7b, type: 3}
   m_Name: Rocket
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 1
   damage: 25
