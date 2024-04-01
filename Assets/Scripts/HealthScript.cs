@@ -21,7 +21,6 @@ public class HealthScript : MonoBehaviour
         {
             ObjectIsDead();
         }
-        Debug.Log("Current Health: " + currentHealth);
     }
 
     private void ObjectIsDead()

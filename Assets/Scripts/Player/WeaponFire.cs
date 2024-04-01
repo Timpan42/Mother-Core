@@ -13,17 +13,20 @@ public class WeaponFire : MonoBehaviour
     [SerializeField] private float weaponDamage;
     private float totalDamage;
     private ProjectileLogic bulletScript = null;
-    private int ammoHolderCounter;
+    private int ammoMax;
     private int ammoIndex = 0;
+    public int getMaxAmmo { get => ammoMax; }
+    public int getAmmoIndex { get => ammoIndex; }
     private Collider enemyTarget;
     private WaitForSeconds seconds = new WaitForSeconds(1);
     private bool reloading = false;
+    public bool isReloading { get => reloading; }
 
 
 
     private void Start()
     {
-        ammoHolderCounter = ammoHolder.childCount;
+        ammoMax = ammoHolder.childCount;
     }
     public void ActivateRocket(Collider target)
     {
@@ -76,7 +79,7 @@ public class WeaponFire : MonoBehaviour
     private void IncreaseAmmoIndex()
     {
         ammoIndex++;
-        if (ammoIndex >= ammoHolderCounter)
+        if (ammoIndex >= ammoMax)
         {
             Reload();
         }
@@ -88,7 +91,6 @@ public class WeaponFire : MonoBehaviour
         if (!reloading)
         {
             StartCoroutine(ReloadTimer());
-            ammoIndex = 0;
             reloading = true;
         }
     }
@@ -101,6 +103,8 @@ public class WeaponFire : MonoBehaviour
             yield return seconds;
             counter--;
         }
+
+        ammoIndex = 0;
         reloading = false;
         yield return null;
     }

@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float forwardSpeed;
     [SerializeField] private float backwardsSpeed;
+    [SerializeField] private float longitudeSpeed;
+
 
     private void Awake()
     {
@@ -44,6 +46,11 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             transform.position += transform.forward * backwardsSpeed * Time.deltaTime * moveDirection.z;
+        }
+
+        if (moveDirection.x > 0 || moveDirection.x < 0)
+        {
+            transform.position += transform.right * longitudeSpeed * Time.deltaTime * moveDirection.x;
         }
     }
 }
