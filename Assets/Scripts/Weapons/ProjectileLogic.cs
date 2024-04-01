@@ -11,14 +11,15 @@ public class ProjectileLogic : MonoBehaviour
     private bool activeBullet;
     private float damage;
 
-    private void Start()
+    public void FollowTarget(Transform target, float totalDamage)
     {
         parent = transform.root.GetComponent<Transform>();
-        gameObject.SetActive(false);
-    }
+        transform.position = parent.position;
 
-    void Update()
-    {
+        enemyTarget = target;
+        damage = totalDamage;
+
+        activeBullet = true;
         StartCoroutine(SendHomingBullet());
     }
 
@@ -30,14 +31,6 @@ public class ProjectileLogic : MonoBehaviour
             transform.LookAt(enemyTarget);
             yield return null;
         }
-    }
-
-    public void FollowTarget(Transform target, float totalDamage)
-    {
-        enemyTarget = target;
-        damage = totalDamage;
-        activeBullet = true;
-
     }
 
     private void OnTriggerEnter(Collider collider)

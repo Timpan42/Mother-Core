@@ -7,6 +7,8 @@ public class HealthScript : MonoBehaviour
 {
     [SerializeField] private float maxHealth;
     private float currentHealth;
+    public float getMaxHealth { get => maxHealth; }
+    public float getHealth { get => currentHealth; }
 
     private void Start()
     {
@@ -19,7 +21,6 @@ public class HealthScript : MonoBehaviour
         {
             ObjectIsDead();
         }
-        Debug.Log("Current Health: " + currentHealth);
     }
 
     private void ObjectIsDead()

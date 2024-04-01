@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,7 @@ public class WeaponController : MonoBehaviour
     private bool abilityToFire = false;
     private float changeTargetInputValue;
     private bool combatMode = false;
+    public bool getCombatMode { get => combatMode; }
 
     // check for enemies variables 
     [SerializeField] private float radius;
@@ -124,10 +126,9 @@ public class WeaponController : MonoBehaviour
     {
         if (fireInput.WasPerformedThisFrame())
         {
-            if (abilityToFire && focusObject != null)
+            if (abilityToFire && focusObject != null && !weaponFire.isReloading)
             {
                 weaponFire.ActivateRocket(focusObject);
-                Debug.Log("FIRE!!!!");
                 FireCoolDown();
             }
             else
@@ -259,6 +260,18 @@ public class WeaponController : MonoBehaviour
                 intFocusOnObject = i;
                 break;
             }
+        }
+    }
+
+    public Transform GetFocusTarget()
+    {
+        if (hitCollider[intFocusOnObject] != null)
+        {
+            return hitCollider[intFocusOnObject].transform;
+        }
+        else
+        {
+            return null;
         }
     }
 
