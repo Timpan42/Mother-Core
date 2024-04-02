@@ -12,6 +12,8 @@ public class WeaponController : MonoBehaviour
     private InputAction changeTargetInput;
     private InputAction combatModeInput;
     private InputAction reloadInput;
+    private InputAction inputCorePower;
+
     private bool abilityToFire = false;
     private float changeTargetInputValue;
     private bool combatMode = false;
@@ -22,6 +24,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private LayerMask layerToHit;
     [SerializeField] private Transform parent;
     [SerializeField] private WeaponFire weaponFire;
+    [SerializeField] private InsideCore insideCore;
     private Collider[] hitCollider = new Collider[10];
     private int numberOfColliders;
     private int prevNumberOfColliders;
@@ -46,10 +49,12 @@ public class WeaponController : MonoBehaviour
         changeTargetInput = playerInputMap.PlayerMovement.ChangeTarget;
         combatModeInput = playerInputMap.PlayerMovement.CombatMode;
         reloadInput = playerInputMap.PlayerMovement.Reload;
+        inputCorePower = playerInputMap.PlayerMovement.CorePower;
         fireInput.Enable();
         changeTargetInput.Enable();
         combatModeInput.Enable();
         reloadInput.Enable();
+        inputCorePower.Enable();
     }
 
     // See radius
@@ -60,6 +65,8 @@ public class WeaponController : MonoBehaviour
     }
     private void Update()
     {
+        ActivateInsideCore();
+
         ReloadWeaponHolder();
 
         ActivateCombatMode();
@@ -88,6 +95,14 @@ public class WeaponController : MonoBehaviour
             abilityToFire = true;
         }
 
+    }
+
+    private void ActivateInsideCore()
+    {
+        if (inputCorePower.WasPressedThisFrame())
+        {
+            insideCore.ActivateTheCore();
+        }
     }
 
     private void ReloadWeaponHolder()

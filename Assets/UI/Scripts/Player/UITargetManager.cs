@@ -37,6 +37,10 @@ public class UITargetManager : MonoBehaviour
                     targetPosition = Camera.main.WorldToScreenPoint(target.position);
                     SetOutMarker(targetPosition);
                 }
+                else
+                {
+                    marker.enabled = false;
+                }
             }
             else if (marker.enabled)
             {
