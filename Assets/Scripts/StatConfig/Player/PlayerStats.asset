@@ -9,10 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a882c51672dd974989ea86dc2778f7b, type: 3}
-  m_Name: Rocket
+  m_Script: {fileID: 11500000, guid: e5afc1edbe33de449be540533aff3567, type: 3}
+  m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  AmmoName: Rocket
-  AmmoID: 0
-  speed: 20
-  damage: 25
+  Hp: 000000000a000000
+  WeaponDamage:
+  - 0
+  - 10
+  WeaponRange:
+  - 0
+  - 10
+  ShipSpeed:
+  - 0
+  - 10
+  ShipTurnRate:
+  - 0
+  - 10
+  CoreDamage:
+  - 0
+  - 10

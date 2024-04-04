@@ -344,6 +344,54 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerUI"",
+            ""id"": ""13612808-80d1-4eb0-b438-8c7a970e044c"",
+            ""actions"": [
+                {
+                    ""name"": ""UpgradeWindow"",
+                    ""type"": ""Button"",
+                    ""id"": ""2476d590-c755-4061-9a9a-bd27b31304c5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EscWindow"",
+                    ""type"": ""Button"",
+                    ""id"": ""6a413437-cdfe-423a-9521-6f8de265c7e3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""de7c97de-44af-4094-8fca-019a69e2d3c7"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpgradeWindow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15b46bce-8272-4d10-b78c-767d346510f7"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EscWindow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -358,6 +406,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerMovement_Reload = m_PlayerMovement.FindAction("Reload", throwIfNotFound: true);
         m_PlayerMovement_CombatMode = m_PlayerMovement.FindAction("CombatMode", throwIfNotFound: true);
         m_PlayerMovement_ChangeTarget = m_PlayerMovement.FindAction("ChangeTarget", throwIfNotFound: true);
+        // PlayerUI
+        m_PlayerUI = asset.FindActionMap("PlayerUI", throwIfNotFound: true);
+        m_PlayerUI_UpgradeWindow = m_PlayerUI.FindAction("UpgradeWindow", throwIfNotFound: true);
+        m_PlayerUI_EscWindow = m_PlayerUI.FindAction("EscWindow", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -517,6 +569,60 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public PlayerMovementActions @PlayerMovement => new PlayerMovementActions(this);
+
+    // PlayerUI
+    private readonly InputActionMap m_PlayerUI;
+    private List<IPlayerUIActions> m_PlayerUIActionsCallbackInterfaces = new List<IPlayerUIActions>();
+    private readonly InputAction m_PlayerUI_UpgradeWindow;
+    private readonly InputAction m_PlayerUI_EscWindow;
+    public struct PlayerUIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public PlayerUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @UpgradeWindow => m_Wrapper.m_PlayerUI_UpgradeWindow;
+        public InputAction @EscWindow => m_Wrapper.m_PlayerUI_EscWindow;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerUIActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerUIActionsCallbackInterfaces.Add(instance);
+            @UpgradeWindow.started += instance.OnUpgradeWindow;
+            @UpgradeWindow.performed += instance.OnUpgradeWindow;
+            @UpgradeWindow.canceled += instance.OnUpgradeWindow;
+            @EscWindow.started += instance.OnEscWindow;
+            @EscWindow.performed += instance.OnEscWindow;
+            @EscWindow.canceled += instance.OnEscWindow;
+        }
+
+        private void UnregisterCallbacks(IPlayerUIActions instance)
+        {
+            @UpgradeWindow.started -= instance.OnUpgradeWindow;
+            @UpgradeWindow.performed -= instance.OnUpgradeWindow;
+            @UpgradeWindow.canceled -= instance.OnUpgradeWindow;
+            @EscWindow.started -= instance.OnEscWindow;
+            @EscWindow.performed -= instance.OnEscWindow;
+            @EscWindow.canceled -= instance.OnEscWindow;
+        }
+
+        public void RemoveCallbacks(IPlayerUIActions instance)
+        {
+            if (m_Wrapper.m_PlayerUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerUIActions @PlayerUI => new PlayerUIActions(this);
     public interface IPlayerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -527,5 +633,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnCombatMode(InputAction.CallbackContext context);
         void OnChangeTarget(InputAction.CallbackContext context);
+    }
+    public interface IPlayerUIActions
+    {
+        void OnUpgradeWindow(InputAction.CallbackContext context);
+        void OnEscWindow(InputAction.CallbackContext context);
     }
 }

@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a882c51672dd974989ea86dc2778f7b, type: 3}
-  m_Name: Rocket
+  m_Script: {fileID: 11500000, guid: 23f49eb976721fd45a66aa664a028c81, type: 3}
+  m_Name: Ship_1_Stats
   m_EditorClassIdentifier: 
-  AmmoName: Rocket
-  AmmoID: 0
-  speed: 20
-  damage: 25
+  ShipName: Ship Greger
+  ShipID: 0
+  Hp: 10
+  WeaponDamage: 2
+  WeaponRange: 15
+  ShipSpeed: 20
+  ShipTurnRate: 40
+  CoreDamage: 1
