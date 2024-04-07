@@ -557,7 +557,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &183675120
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4180,8 +4180,8 @@ MonoBehaviour:
         m_MethodName: UpgradeButtonPressed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 930505415}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 930505416}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4238,6 +4238,7 @@ GameObject:
   - component: {fileID: 1073737503}
   - component: {fileID: 1073737502}
   - component: {fileID: 1073737506}
+  - component: {fileID: 1073737511}
   - component: {fileID: 1073737507}
   - component: {fileID: 1073737508}
   - component: {fileID: 1073737509}
@@ -4427,18 +4428,30 @@ MonoBehaviour:
   ShipSpeed: 0
   ShipTurnRate: 0
   CoreDamage: 0
-  HpIncrease: 0
-  WeaponDamageIncrease: 0
-  WeaponRangeIncrease: 0
-  ShipSpeedIncrease: 0
-  ShipTurnRateIncrease: 0
-  CoreDamageIncrease: 0
+  HpIncrease: 2
+  WeaponDamageIncrease: 1
+  WeaponRangeIncrease: 1
+  ShipSpeedIncrease: 2
+  ShipTurnRateIncrease: 2
+  CoreDamageIncrease: 1
   HpIncreaseCost: 10
   WeaponDamageIncreaseCost: 20
   WeaponRangeIncreaseCost: 50
   ShipSpeedIncreaseCost: 30
   ShipTurnRateIncreaseCost: 20
   CoreDamageIncreaseCost: 100
+--- !u!114 &1073737511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073737501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c02191a35021994d89194bf1c927baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1124791783
 GameObject:
   m_ObjectHideFlags: 0
@@ -4527,8 +4540,8 @@ MonoBehaviour:
         m_MethodName: UpgradeButtonPressed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1850968644}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 1850968645}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5638,8 +5651,8 @@ MonoBehaviour:
         m_MethodName: UpgradeButtonPressed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1199313154}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 1199313155}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7257,8 +7270,8 @@ MonoBehaviour:
         m_MethodName: UpgradeButtonPressed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 576366356}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 576366357}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7838,8 +7851,8 @@ MonoBehaviour:
         m_MethodName: UpgradeButtonPressed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1944617093}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 1944617094}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8858,8 +8871,8 @@ MonoBehaviour:
         m_MethodName: UpgradeButtonPressed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1196497770}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 1196497771}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

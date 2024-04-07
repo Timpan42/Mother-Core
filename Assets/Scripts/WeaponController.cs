@@ -7,13 +7,6 @@ using UnityEngine.InputSystem;
 public class WeaponController : MonoBehaviour
 {
     // input variables 
-    private PlayerControls playerInputMap;
-    private InputAction fireInput;
-    private InputAction changeTargetInput;
-    private InputAction combatModeInput;
-    private InputAction reloadInput;
-    private InputAction inputCorePower;
-
     private bool abilityToFire = false;
     private float changeTargetInputValue;
     private bool combatMode = false;
@@ -38,25 +31,6 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float shootCoolDown;
     private float shootCoolDownTimer;
 
-    private void Awake()
-    {
-        playerInputMap = new PlayerControls();
-    }
-
-    private void OnEnable()
-    {
-        fireInput = playerInputMap.PlayerMovement.Fire;
-        changeTargetInput = playerInputMap.PlayerMovement.ChangeTarget;
-        combatModeInput = playerInputMap.PlayerMovement.CombatMode;
-        reloadInput = playerInputMap.PlayerMovement.Reload;
-        inputCorePower = playerInputMap.PlayerMovement.CorePower;
-        fireInput.Enable();
-        changeTargetInput.Enable();
-        combatModeInput.Enable();
-        reloadInput.Enable();
-        inputCorePower.Enable();
-    }
-
     // See radius
     private void OnDrawGizmos()
     {
@@ -65,12 +39,6 @@ public class WeaponController : MonoBehaviour
     }
     private void Update()
     {
-        ActivateInsideCore();
-
-        ReloadWeaponHolder();
-
-        ActivateCombatMode();
-
         if (combatMode)
         {
             if (prevNumberOfColliders != numberOfColliders)
@@ -83,8 +51,6 @@ public class WeaponController : MonoBehaviour
 
             SortArrayByDistends();
             FocusObject();
-
-            FireAtTarget();
         }
         if (!abilityToFire)
         {
@@ -97,35 +63,21 @@ public class WeaponController : MonoBehaviour
 
     }
 
-    private void ActivateInsideCore()
+    public void ReloadWeaponHolder()
     {
-        if (inputCorePower.WasPressedThisFrame())
-        {
-            insideCore.ActivateTheCore();
-        }
+        weaponFire.Reload();
     }
 
-    private void ReloadWeaponHolder()
+    public void ActivateCombatMode()
     {
-        if (reloadInput.WasPressedThisFrame())
+        combatMode = !combatMode;
+        if (combatMode)
         {
-            weaponFire.Reload();
+            Debug.Log("combatMode active");
         }
-    }
-
-    private void ActivateCombatMode()
-    {
-        if (combatModeInput.WasPerformedThisFrame())
+        else
         {
-            combatMode = !combatMode;
-            if (combatMode)
-            {
-                Debug.Log("combatMode active");
-            }
-            else
-            {
-                Debug.Log("combatMode deactivated");
-            }
+            Debug.Log("combatMode deactivated");
         }
     }
 
@@ -137,19 +89,16 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    private void FireAtTarget()
+    public void FireAtTarget()
     {
-        if (fireInput.WasPerformedThisFrame())
+        if (abilityToFire && focusObject != null && !weaponFire.isReloading)
         {
-            if (abilityToFire && focusObject != null && !weaponFire.isReloading)
-            {
-                weaponFire.ActivateRocket(focusObject);
-                FireCoolDown();
-            }
-            else
-            {
-                Debug.Log("Cant fire at target");
-            }
+            weaponFire.ActivateRocket(focusObject);
+            FireCoolDown();
+        }
+        else
+        {
+            Debug.Log("Cant fire at target");
         }
     }
 
@@ -211,14 +160,6 @@ public class WeaponController : MonoBehaviour
 
     private void FocusObject()
     {
-
-        if (changeTargetInput.WasPressedThisFrame())
-        {
-            changeTargetInputValue = changeTargetInput.ReadValue<float>();
-            switchFocusTarget = true;
-            changeObject();
-        }
-
         if (switchFocusTarget)
         {
             focusObject = hitCollider[intFocusOnObject];
@@ -241,8 +182,11 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    private void changeObject()
+    public void ChangeObject(InputAction changeTargetInput)
     {
+        changeTargetInputValue = changeTargetInput.ReadValue<float>();
+        switchFocusTarget = true;
+
         if (changeTargetInputValue > 0)
         {
             intFocusOnObject++;

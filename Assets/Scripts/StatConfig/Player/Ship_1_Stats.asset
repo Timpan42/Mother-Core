@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShipName: Ship Greger
   ShipID: 0
-  Hp: 10
-  WeaponDamage: 2
-  WeaponRange: 15
-  ShipSpeed: 20
-  ShipTurnRate: 40
-  CoreDamage: 1
+  Hp: 1
+  WeaponDamage: 1
+  WeaponRange: 1
+  ShipSpeed: 10
+  ShipTurnRate: 10
+  CoreDamage: 0

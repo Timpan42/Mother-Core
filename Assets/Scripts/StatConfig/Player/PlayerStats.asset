@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5afc1edbe33de449be540533aff3567, type: 3}
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  Hp: 000000000a000000
+  Hp: 0100000014000000
   WeaponDamage:
-  - 0
-  - 10
+  - 1
+  - 30
   WeaponRange:
-  - 0
   - 10
+  - 50
   ShipSpeed:
-  - 0
   - 10
+  - 40
   ShipTurnRate:
-  - 0
   - 10
+  - 30
   CoreDamage:
-  - 0
-  - 10
+  - 1
+  - 100

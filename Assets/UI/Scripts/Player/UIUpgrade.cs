@@ -16,9 +16,6 @@ public class UIUpgrade : MonoBehaviour
     private TextMeshProUGUI increaseText;
     private TextMeshProUGUI costText;
 
-
-    // get text 1 and 3 
-
     void Start()
     {
         StartCoroutine(StartUpgradeWindow());
@@ -44,11 +41,10 @@ public class UIUpgrade : MonoBehaviour
                 increaseText = statTransformHolder.GetChild(3).GetComponent<TextMeshProUGUI>();
                 costText = parentTransformHolder.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
 
-                Debug.Log(statsUpgrade.UpgradeInformation);
                 temporaryList = statsUpgrade.UpgradeInformation[name];
 
                 statText.text = "" + temporaryList[0];
-                increaseText.text = "" + temporaryList[1];
+                increaseText.text = "" + (temporaryList[0] + temporaryList[1]);
                 costText.text = "SC: " + temporaryList[2];
                 index++;
             }
@@ -56,21 +52,31 @@ public class UIUpgrade : MonoBehaviour
         }
     }
 
-    public void UpgradeButtonPressed(GameObject upgradeHolder)
+    public void UpgradeButtonPressed(Transform upgrade)
     {
+        string name = upgrade.name;
+        statText = GetStatText(upgrade);
+        increaseText = GetIncreaseText(upgrade);
+        costText = GetCostText(upgrade);
 
+        statsUpgrade.CalculateUpgrade(name);
+        temporaryList = statsUpgrade.UpgradeInformation[name];
+
+        statText.text = "" + temporaryList[0];
+        increaseText.text = "" + temporaryList[1];
+        costText.text = "SC: " + temporaryList[2];
     }
-    /*
-        private TextMeshProUGUI GetCostText(){
-
-        }
-        private TextMeshProUGUI GetStatText(){
-
-        }
-        private TextMeshProUGUI GetIncresText(){
-
-
-        }
-    */
+    private TextMeshProUGUI GetCostText(Transform upgradeCostText)
+    {
+        return upgradeCostText.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+    }
+    private TextMeshProUGUI GetStatText(Transform upgradeStatText)
+    {
+        return upgradeStatText.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
+    }
+    private TextMeshProUGUI GetIncreaseText(Transform upgradeIncreaseText)
+    {
+        return upgradeIncreaseText.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>();
+    }
 
 }

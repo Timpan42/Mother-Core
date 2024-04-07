@@ -8,8 +8,6 @@ using UnityEngine.InputSystem;
 
 public class InsideCore : MonoBehaviour
 {
-    private PlayerControls playerInputMap;
-    private InputAction inputCorePower;
     [SerializeField] private float damage;
     [SerializeField] private int damageTimer;
     [SerializeField] CorePower corePower;
@@ -20,31 +18,17 @@ public class InsideCore : MonoBehaviour
     private Collider[] hitCollider = new Collider[10];
     private int numberOfColliders;
 
-    private void Awake()
-    {
-        playerInputMap = new PlayerControls();
-    }
-
-    private void OnEnable()
-    {
-        inputCorePower = playerInputMap.PlayerMovement.CorePower;
-        inputCorePower.Enable();
-    }
-
     public void ActivateTheCore()
     {
-        if (inputCorePower.WasPressedThisFrame())
+        activeCore = !activeCore;
+        if (activeCore)
         {
-            if (activeCore == false)
-            {
-                corePower.ActivateCore();
-                activeCore = true;
-                StartCoroutine(CoreOperation());
-            }
-            else
-            {
-                activeCore = false;
-            }
+            corePower.ActivateCore(activeCore);
+            StartCoroutine(CoreOperation());
+        }
+        else
+        {
+            corePower.ActivateCore(activeCore);
         }
     }
 
@@ -72,7 +56,6 @@ public class InsideCore : MonoBehaviour
             {
                 yield return waitTimer;
                 counter--;
-
             }
 
             numberOfColliders = Physics.OverlapBoxNonAlloc(transform.position, boxHalfExtents, hitCollider, transform.rotation, layerToHit);

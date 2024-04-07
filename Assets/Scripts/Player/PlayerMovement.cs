@@ -5,39 +5,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private PlayerControls playerInputMap;
-    private InputAction moveAction;
-    private Rigidbody playerRigidbody;
-    private Vector3 moveDirection;
-
     [SerializeField] private float forwardSpeed;
     [SerializeField] private float backwardsSpeed;
     [SerializeField] private float longitudeSpeed;
 
-
-    private void Awake()
-    {
-        playerInputMap = new PlayerControls();
-    }
-
-    private void OnEnable()
-    {
-        moveAction = playerInputMap.PlayerMovement.Move;
-        moveAction.Enable();
-    }
-
-    private void Start()
-    {
-        playerRigidbody = GetComponent<Rigidbody>();
-    }
-
-    private void Update()
-    {
-        moveDirection = moveAction.ReadValue<Vector3>();
-        Thruster();
-
-    }
-    private void Thruster()
+    public void Thruster(Vector3 moveDirection)
     {
         if (moveDirection.z > 0)
         {

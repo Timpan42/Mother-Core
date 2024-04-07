@@ -42,61 +42,86 @@ public class CalculateStatsUpgrade : MonoBehaviour
         CalculateStats();
         UpgradeInformation = new Dictionary<string, List<float>>
         {
-            {"Hp", HpList = new List<float>{Hp,HpIncrease,HpIncreaseCost}},
-            {"WeaponDamage", WeaponDamageList = new List<float>{WeaponDamage,WeaponDamageIncrease,WeaponDamageIncreaseCost}},
-            {"WeaponRange", WeaponRangeList = new List<float>{WeaponRange,WeaponRangeIncrease,WeaponRangeIncreaseCost}},
-            {"ShipSpeed", ShipSpeedList = new List<float>{ShipSpeed,ShipSpeedIncrease,ShipSpeedIncreaseCost}},
-            {"ShipTurnRate", ShipTurnRateList = new List<float>{ShipTurnRate,ShipTurnRateIncrease,ShipTurnRateIncreaseCost}},
-            {"CoreDamage", CoreDamageList = new List<float>{CoreDamage,CoreDamageIncrease,CoreDamageIncreaseCost}},
+            {"Hp", HpList = new List<float>{playerStats.Hp[0],HpIncrease,HpIncreaseCost}},
+            {"WeaponDamage", WeaponDamageList = new List<float>{playerStats.WeaponDamage[0],WeaponDamageIncrease,WeaponDamageIncreaseCost}},
+            {"WeaponRange", WeaponRangeList = new List<float>{playerStats.WeaponRange[0],WeaponRangeIncrease,WeaponRangeIncreaseCost}},
+            {"ShipSpeed", ShipSpeedList = new List<float>{playerStats.ShipSpeed[0],ShipSpeedIncrease,ShipSpeedIncreaseCost}},
+            {"ShipTurnRate", ShipTurnRateList = new List<float>{playerStats.ShipTurnRate[0],ShipTurnRateIncrease,ShipTurnRateIncreaseCost}},
+            {"CoreDamage", CoreDamageList = new List<float>{playerStats.CoreDamage[0],CoreDamageIncrease,CoreDamageIncreaseCost}},
         };
         hasUpgrade = true;
     }
 
     public void CalculateUpgrade(string upgrade)
     {
+        bool upgraded = true;
+        float stat = 0;
+        float increaseStat = 0;
+        float cost = 0;
+        CalculateStats();
         switch (upgrade)
         {
             case "Hp":
-                Hp = shipStats.Hp + playerStats.Hp[0];
-                Hp = Hp + HpIncrease;
-                playerStats.Hp[1] += HpIncreaseCost;
+                stat = UpgradeInformation[upgrade][0] + HpIncrease;
+                increaseStat = stat + HpIncrease;
+                cost = UpgradeInformation[upgrade][2] + HpIncreaseCost;
+
+                Hp = shipStats.Hp + (int)stat;
                 break;
 
             case "WeaponDamage":
-                WeaponDamage = shipStats.WeaponDamage + playerStats.WeaponDamage[0];
-                WeaponDamage = WeaponDamage + WeaponDamageIncrease;
-                playerStats.WeaponDamage[1] += WeaponDamageIncreaseCost;
+                stat = UpgradeInformation[upgrade][0] + WeaponDamageIncrease;
+                increaseStat = stat + WeaponDamageIncrease;
+                cost = UpgradeInformation[upgrade][2] + WeaponDamageIncreaseCost;
+
+                WeaponDamage = shipStats.WeaponDamage + stat;
                 break;
 
             case "WeaponRange":
-                WeaponRange = shipStats.WeaponRange + playerStats.WeaponRange[0];
-                WeaponRange = WeaponRange + WeaponRangeIncrease;
-                playerStats.WeaponRange[1] += WeaponRangeIncreaseCost;
+                stat = UpgradeInformation[upgrade][0] + WeaponRangeIncrease;
+                increaseStat = stat + WeaponRangeIncrease;
+                cost = UpgradeInformation[upgrade][2] + WeaponRangeIncreaseCost;
+
+                WeaponRange = shipStats.WeaponRange + stat;
                 break;
 
             case "ShipSpeed":
-                ShipSpeed = shipStats.ShipSpeed + playerStats.ShipSpeed[0];
-                ShipSpeed = ShipSpeed + ShipSpeedIncrease;
-                playerStats.ShipSpeed[1] += ShipSpeedIncreaseCost;
+                stat = UpgradeInformation[upgrade][0] + ShipSpeedIncrease;
+                increaseStat = stat + ShipSpeedIncrease;
+                cost = UpgradeInformation[upgrade][2] + ShipSpeedIncreaseCost;
+
+                ShipSpeed = shipStats.ShipSpeed + stat;
                 break;
 
             case "ShipTurnRate":
-                ShipTurnRate = shipStats.ShipTurnRate + playerStats.ShipTurnRate[0];
-                ShipTurnRate = ShipTurnRate + ShipTurnRateIncrease;
-                playerStats.ShipTurnRate[1] += ShipTurnRateIncreaseCost;
+                stat = UpgradeInformation[upgrade][0] + ShipTurnRateIncrease;
+                increaseStat = stat + ShipTurnRateIncrease;
+                cost = UpgradeInformation[upgrade][2] + ShipTurnRateIncreaseCost;
+
+                ShipTurnRate = shipStats.ShipTurnRate + stat;
                 break;
 
             case "CoreDamage":
-                CoreDamage = shipStats.CoreDamage + playerStats.CoreDamage[0];
-                CoreDamage = CoreDamage + CoreDamageIncrease;
-                playerStats.CoreDamage[1] += CoreDamageIncreaseCost;
+                stat = UpgradeInformation[upgrade][0] + CoreDamageIncrease;
+                increaseStat = stat + CoreDamageIncrease;
+                cost = UpgradeInformation[upgrade][2] + CoreDamageIncreaseCost;
+
+                CoreDamage = shipStats.CoreDamage + stat;
                 break;
 
             default:
+                upgraded = false;
                 Debug.Log("no upgrade");
                 break;
         }
+        if (upgraded)
+        {
+            UpgradeInformationUpdate(upgrade, stat, increaseStat, cost);
+        }
+
+
     }
+
 
     public void CalculateStats()
     {
@@ -106,6 +131,11 @@ public class CalculateStatsUpgrade : MonoBehaviour
         ShipSpeed = shipStats.ShipSpeed + playerStats.ShipSpeed[0];
         ShipTurnRate = shipStats.ShipTurnRate + playerStats.ShipTurnRate[0];
         CoreDamage = shipStats.CoreDamage + playerStats.CoreDamage[0];
+    }
+
+    private void UpgradeInformationUpdate(string name, float stat, float increaseStat, float cost)
+    {
+        UpgradeInformation[name] = new List<float> { stat, increaseStat, cost };
     }
 }
 

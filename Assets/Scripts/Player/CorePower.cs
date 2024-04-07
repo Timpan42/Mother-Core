@@ -54,16 +54,12 @@ public class CorePower : MonoBehaviour
     {
         collisionObjectScript.pulledByCore(distans, pullForce);
     }
-    public void ActivateCore()
+    public void ActivateCore(bool input)
     {
-        if (activateCorePower == false)
+        activateCorePower = input;
+        if (activateCorePower)
         {
-            activateCorePower = true;
             StartCoroutine(CorePullObject());
-        }
-        else
-        {
-            activateCorePower = false;
         }
     }
 }
