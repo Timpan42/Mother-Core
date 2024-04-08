@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Controls : MonoBehaviour
 {
     private PlayerControls playerInputMap;
+    private PlayerControls playerInputUI;
 
     //Inputs
     private InputAction cameraInput;
@@ -16,11 +18,17 @@ public class Controls : MonoBehaviour
     private InputAction combatModeInput;
     private InputAction reloadInput;
 
+    //UI inputs 
+    private InputAction upgradeInput;
+    private InputAction escInput;
+
+
     //Scripts
     private InsideCore insideCore;
     private WeaponController weaponController;
     private PlayerMovement playerMovement;
     private RotatePlayer rotatePlayer;
+    [SerializeField] private UIToggleManager uiToggleManager;
 
     //Variables 
     private Vector3 moveDirection;
@@ -39,6 +47,8 @@ public class Controls : MonoBehaviour
     private void Awake()
     {
         playerInputMap = new PlayerControls();
+        playerInputUI = new PlayerControls();
+
     }
 
     private void OnEnable()
@@ -51,6 +61,10 @@ public class Controls : MonoBehaviour
         combatModeInput = playerInputMap.PlayerMovement.CombatMode;
         reloadInput = playerInputMap.PlayerMovement.Reload;
         inputCorePower = playerInputMap.PlayerMovement.CorePower;
+
+        upgradeInput = playerInputUI.PlayerUI.UpgradeWindow;
+        escInput = playerInputUI.PlayerUI.EscWindow;
+
         cameraInput.Enable();
         moveAction.Enable();
         inputCorePower.Enable();
@@ -59,6 +73,9 @@ public class Controls : MonoBehaviour
         combatModeInput.Enable();
         reloadInput.Enable();
         inputCorePower.Enable();
+
+        upgradeInput.Enable();
+        escInput.Enable();
     }
 
     private void Update()
@@ -67,6 +84,7 @@ public class Controls : MonoBehaviour
         RotateMovementInputs();
         CorePowerInputs();
         WeaponControllerInputs();
+        UpgradeMenu();
     }
 
     private void RotateMovementInputs()
@@ -107,6 +125,22 @@ public class Controls : MonoBehaviour
         if (changeTargetInput.WasPressedThisFrame())
         {
             weaponController.ChangeObject(changeTargetInput);
+        }
+    }
+
+    private void UpgradeMenu()
+    {
+        if (upgradeInput.WasPerformedThisFrame())
+        {
+            uiToggleManager.ToggleUpgradeMenu();
+        }
+    }
+
+    private void EscMenu()
+    {
+        if (escInput.WasPerformedThisFrame())
+        {
+            uiToggleManager.ToggleEscMenu();
         }
     }
 }

@@ -4392,7 +4392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a32e260d1a54240bfeb432021a6d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseControlsActive: 0
   xTurnSpeed: 40
   yTurnSpeed: 40
 --- !u!114 &1073737509
@@ -4452,6 +4451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c02191a35021994d89194bf1c927baf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiToggleManager: {fileID: 1519614438}
 --- !u!1 &1124791783
 GameObject:
   m_ObjectHideFlags: 0
@@ -6443,6 +6443,7 @@ GameObject:
   - component: {fileID: 1519614435}
   - component: {fileID: 1519614436}
   - component: {fileID: 1519614437}
+  - component: {fileID: 1519614438}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -6510,6 +6511,20 @@ MonoBehaviour:
   player: {fileID: 1073737501}
   marker: {fileID: 1636178884}
   dotAllowedAmount: 0.6
+--- !u!114 &1519614438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519614433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38a4574c0e084874295284e123535661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeMenu: {fileID: 183675119}
+  escMenu: {fileID: 0}
 --- !u!1 &1575439179
 GameObject:
   m_ObjectHideFlags: 0
