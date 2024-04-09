@@ -5,9 +5,16 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float forwardSpeed;
-    [SerializeField] private float backwardsSpeed;
-    [SerializeField] private float longitudeSpeed;
+    private float forwardSpeed;
+    private float backwardsSpeed;
+    private float longitudeSpeed;
+
+    public void UpdateSpeed(float speed)
+    {
+        forwardSpeed = speed;
+        backwardsSpeed = speed / 2;
+        longitudeSpeed = speed / 2;
+    }
 
     public void Thruster(Vector3 moveDirection)
     {

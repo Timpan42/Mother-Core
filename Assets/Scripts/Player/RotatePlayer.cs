@@ -6,9 +6,15 @@ using UnityEngine.InputSystem;
 
 public class RotatePlayer : MonoBehaviour
 {
-    [SerializeField] private float xTurnSpeed;
-    [SerializeField] private float yTurnSpeed;
+    private float xTurnSpeed;
+    private float yTurnSpeed;
     private Vector2 inputValue;
+
+    public void UpdateRotation(float speed)
+    {
+        xTurnSpeed = speed;
+        yTurnSpeed = speed;
+    }
 
     public void Rotate(Vector2 input)
     {

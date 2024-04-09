@@ -7,12 +7,12 @@ public class CalculateStatsUpgrade : MonoBehaviour
     [SerializeField] private StatShip shipStats;
     [SerializeField] private UpgradeStat playerStats;
 
-    [HideInInspector] public int Hp;
-    [HideInInspector] public float WeaponDamage;
-    [HideInInspector] public float WeaponRange;
-    [HideInInspector] public float ShipSpeed;
-    [HideInInspector] public float ShipTurnRate;
-    [HideInInspector] public float CoreDamage;
+    private int Hp;
+    private float WeaponDamage;
+    private float WeaponRange;
+    private float ShipSpeed;
+    private float ShipTurnRate;
+    private float CoreDamage;
     private bool hasUpgrade = false;
     public bool getHasUpgrade { get => hasUpgrade; }
 
@@ -35,10 +35,25 @@ public class CalculateStatsUpgrade : MonoBehaviour
     ShipTurnRateIncreaseCost,
     CoreDamageIncreaseCost;
 
+    // Scripts 
+    private HealthScript healthScript;
+    private RotatePlayer rotatePlayer;
+    private PlayerMovement playerMovement;
+    private WeaponFire weaponFire;
+    private WeaponController weaponController;
+    private InsideCore insideCore;
+
     public Dictionary<string, List<float>> UpgradeInformation;
     private List<float> HpList, WeaponDamageList, WeaponRangeList, ShipSpeedList, ShipTurnRateList, CoreDamageList = new List<float>(3);
     private void Start()
     {
+        healthScript = transform.GetComponent<HealthScript>();
+        rotatePlayer = transform.GetComponent<RotatePlayer>();
+        playerMovement = transform.GetComponent<PlayerMovement>();
+        weaponFire = transform.GetComponentInChildren<WeaponFire>();
+        weaponController = transform.GetComponentInChildren<WeaponController>();
+        insideCore = transform.GetComponentInChildren<InsideCore>();
+
         CalculateStats();
         UpgradeInformation = new Dictionary<string, List<float>>
         {
@@ -58,7 +73,6 @@ public class CalculateStatsUpgrade : MonoBehaviour
         float stat = 0;
         float increaseStat = 0;
         float cost = 0;
-        CalculateStats();
         switch (upgrade)
         {
             case "Hp":
@@ -67,6 +81,7 @@ public class CalculateStatsUpgrade : MonoBehaviour
                 cost = UpgradeInformation[upgrade][2] + HpIncreaseCost;
 
                 Hp = shipStats.Hp + (int)stat;
+                UpdateHp();
                 break;
 
             case "WeaponDamage":
@@ -75,6 +90,7 @@ public class CalculateStatsUpgrade : MonoBehaviour
                 cost = UpgradeInformation[upgrade][2] + WeaponDamageIncreaseCost;
 
                 WeaponDamage = shipStats.WeaponDamage + stat;
+                UpdateWeaponDamage();
                 break;
 
             case "WeaponRange":
@@ -83,6 +99,7 @@ public class CalculateStatsUpgrade : MonoBehaviour
                 cost = UpgradeInformation[upgrade][2] + WeaponRangeIncreaseCost;
 
                 WeaponRange = shipStats.WeaponRange + stat;
+                UpdateWeaponRange();
                 break;
 
             case "ShipSpeed":
@@ -91,6 +108,7 @@ public class CalculateStatsUpgrade : MonoBehaviour
                 cost = UpgradeInformation[upgrade][2] + ShipSpeedIncreaseCost;
 
                 ShipSpeed = shipStats.ShipSpeed + stat;
+                UpdateSpeed();
                 break;
 
             case "ShipTurnRate":
@@ -99,6 +117,7 @@ public class CalculateStatsUpgrade : MonoBehaviour
                 cost = UpgradeInformation[upgrade][2] + ShipTurnRateIncreaseCost;
 
                 ShipTurnRate = shipStats.ShipTurnRate + stat;
+                UpdateRotationSpeed();
                 break;
 
             case "CoreDamage":
@@ -107,6 +126,7 @@ public class CalculateStatsUpgrade : MonoBehaviour
                 cost = UpgradeInformation[upgrade][2] + CoreDamageIncreaseCost;
 
                 CoreDamage = shipStats.CoreDamage + stat;
+                UpdateCoreDamage();
                 break;
 
             default:
@@ -121,9 +141,7 @@ public class CalculateStatsUpgrade : MonoBehaviour
 
 
     }
-
-
-    public void CalculateStats()
+    private void CalculateStats()
     {
         Hp = shipStats.Hp + playerStats.Hp[0];
         WeaponDamage = shipStats.WeaponDamage + playerStats.WeaponDamage[0];
@@ -131,11 +149,42 @@ public class CalculateStatsUpgrade : MonoBehaviour
         ShipSpeed = shipStats.ShipSpeed + playerStats.ShipSpeed[0];
         ShipTurnRate = shipStats.ShipTurnRate + playerStats.ShipTurnRate[0];
         CoreDamage = shipStats.CoreDamage + playerStats.CoreDamage[0];
+        UpdateHp();
+        UpdateSpeed();
+        UpdateRotationSpeed();
+        UpdateWeaponDamage();
+        UpdateWeaponRange();
+        UpdateCoreDamage();
     }
 
     private void UpgradeInformationUpdate(string name, float stat, float increaseStat, float cost)
     {
         UpgradeInformation[name] = new List<float> { stat, increaseStat, cost };
+    }
+
+    private void UpdateHp()
+    {
+        healthScript.UpdateHealth(Hp);
+    }
+    private void UpdateSpeed()
+    {
+        playerMovement.UpdateSpeed(ShipSpeed);
+    }
+    private void UpdateRotationSpeed()
+    {
+        rotatePlayer.UpdateRotation(ShipTurnRate);
+    }
+    private void UpdateWeaponDamage()
+    {
+        weaponFire.UpdateWeaponDamage(WeaponDamage);
+    }
+    private void UpdateWeaponRange()
+    {
+        weaponController.UpdateRadius(WeaponRange);
+    }
+    private void UpdateCoreDamage()
+    {
+        insideCore.UpdateCoreDamage(CoreDamage);
     }
 }
 

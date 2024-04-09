@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657832, g: 0.49641222, b: 0.57481664, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1165,9 +1165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammo: {fileID: 11400000, guid: 27f9e7ca962f51a438bc50073d9bf474, type: 2}
+  weaponConfig: {fileID: 11400000, guid: 9c3f809c82da4b33aafa14154f22f0a4, type: 2}
   ammoHolder: {fileID: 440702157}
-  reloadTimer: 3
-  weaponDamage: 1
 --- !u!114 &440702159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1180,14 +1179,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609828de49e7a8b4f92ce246cf04ff95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 15
   layerToHit:
     serializedVersion: 2
     m_Bits: 64
   parent: {fileID: 1073737505}
   weaponFire: {fileID: 440702158}
-  insideCore: {fileID: 1273383655}
-  shootCoolDown: 1
 --- !u!1 &470354221
 GameObject:
   m_ObjectHideFlags: 0
@@ -3171,6 +3167,7 @@ GameObject:
   - component: {fileID: 953538871}
   - component: {fileID: 953538873}
   - component: {fileID: 953538872}
+  - component: {fileID: 953538874}
   m_Layer: 6
   m_Name: Cube
   m_TagString: Enemy
@@ -3316,7 +3313,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593c9cb7a2e4f714c9eb8454dc583cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 6
+--- !u!114 &953538874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953538866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83914312bdf6d7cc58893ac01316a2a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipStats: {fileID: 11400000, guid: bf3b911531c19524cab66d7fde1b0e02, type: 2}
+  enemyStats: {fileID: 11400000, guid: 8344017deed3b16eabcb086cc76b7199, type: 2}
+  Hp: 0
+  WeaponDamage: 0
+  WeaponRange: 0
+  ShipSpeed: 0
+  ShipTurnRate: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -4377,9 +4392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea763275081721c4aac72887c053a484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardSpeed: 20
-  backwardsSpeed: 10
-  longitudeSpeed: 10
 --- !u!114 &1073737508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4392,8 +4404,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a32e260d1a54240bfeb432021a6d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xTurnSpeed: 40
-  yTurnSpeed: 40
 --- !u!114 &1073737509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4406,7 +4416,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593c9cb7a2e4f714c9eb8454dc583cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
 --- !u!114 &1073737510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4421,12 +4430,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipStats: {fileID: 11400000, guid: fecf905ecd225b34fa9d7bde933f5a0a, type: 2}
   playerStats: {fileID: 11400000, guid: 7a98ca75adcbab94ba6e50fd4b10b416, type: 2}
-  Hp: 0
-  WeaponDamage: 0
-  WeaponRange: 0
-  ShipSpeed: 0
-  ShipTurnRate: 0
-  CoreDamage: 0
   HpIncrease: 2
   WeaponDamageIncrease: 1
   WeaponRangeIncrease: 1
@@ -5422,7 +5425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00024f53145b3994ca12aa6d14569a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  coreDamage: 0
   damageTimer: 1
   corePower: {fileID: 609805753}
   layerToHit:
@@ -6658,9 +6661,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammo: {fileID: 11400000, guid: 27f9e7ca962f51a438bc50073d9bf474, type: 2}
+  weaponConfig: {fileID: 11400000, guid: fe7d81f8518a80e8e9e1141cd188f6f3, type: 2}
   ammoHolder: {fileID: 1597551893}
-  reloadTimer: 4
-  weaponDamage: 0
 --- !u!4 &1597551893
 Transform:
   m_ObjectHideFlags: 0
@@ -6693,7 +6695,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ea1bee00be9714580219853fb556f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 10
   layerToHit:
     serializedVersion: 2
     m_Bits: 128
@@ -6701,7 +6702,6 @@ MonoBehaviour:
   parent: {fileID: 953538870}
   player: {fileID: 1073737505}
   minimalDistends: 20
-  shootCoolDown: 2
   outOfCombatCoolDown: 5
 --- !u!1 &1610995498
 GameObject:

@@ -12,15 +12,13 @@ public class WeaponController : MonoBehaviour
     private bool combatMode = false;
     public bool getCombatMode { get => combatMode; }
 
-    // check for enemies variables 
-    [SerializeField] private float radius;
     [SerializeField] private LayerMask layerToHit;
     [SerializeField] private Transform parent;
     [SerializeField] private WeaponFire weaponFire;
-    [SerializeField] private InsideCore insideCore;
     private Collider[] hitCollider = new Collider[10];
     private int numberOfColliders;
     private int prevNumberOfColliders;
+    private float weaponRadius;
 
     // focus variables 
     private bool switchFocusTarget = true;
@@ -28,14 +26,13 @@ public class WeaponController : MonoBehaviour
     private int intFocusOnObject = 0;
 
     // shoot variables 
-    [SerializeField] private float shootCoolDown;
     private float shootCoolDownTimer;
 
     // See radius
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(parent.position, radius);
+        Gizmos.DrawWireSphere(parent.position, weaponRadius);
     }
     private void Update()
     {
@@ -47,7 +44,7 @@ public class WeaponController : MonoBehaviour
                 prevNumberOfColliders = numberOfColliders;
             }
 
-            numberOfColliders = Physics.OverlapSphereNonAlloc(parent.position, radius, hitCollider, layerToHit);
+            numberOfColliders = Physics.OverlapSphereNonAlloc(parent.position, weaponRadius, hitCollider, layerToHit);
 
             SortArrayByDistends();
             FocusObject();
@@ -61,6 +58,11 @@ public class WeaponController : MonoBehaviour
             abilityToFire = true;
         }
 
+    }
+
+    public void UpdateRadius(float radius)
+    {
+        weaponRadius = radius;
     }
 
     public void ReloadWeaponHolder()
@@ -107,7 +109,7 @@ public class WeaponController : MonoBehaviour
         if (abilityToFire)
         {
             abilityToFire = false;
-            shootCoolDownTimer = shootCoolDown;
+            shootCoolDownTimer = weaponFire.getShotCoolDown;
         }
     }
 

@@ -8,9 +8,10 @@ using UnityEngine.Animations;
 public class WeaponFire : MonoBehaviour
 {
     [SerializeField] Ammo ammo;
+    [SerializeField] WeaponConfig weaponConfig;
     [SerializeField] Transform ammoHolder;
-    [SerializeField] private float reloadTimer;
-    [SerializeField] private float weaponDamage;
+    public float getShotCoolDown { get => weaponConfig.ShootCoolDown; }
+    private float weaponDamage;
     private float totalDamage;
     private ProjectileLogic bulletScript = null;
     private int ammoMax;
@@ -28,6 +29,12 @@ public class WeaponFire : MonoBehaviour
     {
         ammoMax = ammoHolder.childCount;
     }
+
+    public void UpdateWeaponDamage(float damage)
+    {
+        weaponDamage = damage;
+    }
+
     public void ActivateRocket(Collider target)
     {
         if (target == null)
@@ -67,7 +74,7 @@ public class WeaponFire : MonoBehaviour
 
     private void CalculateDamage()
     {
-        totalDamage = weaponDamage;
+        totalDamage = weaponDamage + ammo.damage + weaponConfig.Damage;
     }
 
     private void SendTarget()
@@ -97,7 +104,7 @@ public class WeaponFire : MonoBehaviour
 
     private IEnumerator ReloadTimer()
     {
-        float counter = reloadTimer;
+        float counter = weaponConfig.ReloadTimer;
         while (counter > 0)
         {
             yield return seconds;

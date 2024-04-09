@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23f49eb976721fd45a66aa664a028c81, type: 3}
-  m_Name: EnemyShip_1_Stats
+  m_Script: {fileID: 11500000, guid: e3bd1c90a92d12131bc0370f011ef61e, type: 3}
+  m_Name: EnemyStat_1
   m_EditorClassIdentifier: 
-  ShipName: TestEnemy
-  ShipID: 1
-  Hp: 2
+  EnemyName: TestEnemy
+  EnemyID: 1
+  Hp: 1
   WeaponDamage: 0
-  WeaponRange: 10
-  ShipSpeed: 10
-  ShipTurnRate: 10
+  WeaponRange: 0
+  ShipSpeed: 0
+  ShipTurnRate: 0
   CoreDamage: 0

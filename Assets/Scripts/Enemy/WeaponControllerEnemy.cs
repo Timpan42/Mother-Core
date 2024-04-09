@@ -7,13 +7,13 @@ public class WeaponControllerEnemy : MonoBehaviour
 {
 
     // check for enemies variables 
-    [SerializeField] private float radius;
     [SerializeField] private LayerMask layerToHit;
     [SerializeField] private WeaponFire weaponFire;
     [SerializeField] private Transform parent;
     [SerializeField] private Transform player;
     [SerializeField] private float minimalDistends;
 
+    private float weaponRadius;
     private float distanceFromPlayer;
     private Collider[] hitCollider = new Collider[1];
     private int numberOfColliders;
@@ -26,7 +26,6 @@ public class WeaponControllerEnemy : MonoBehaviour
     private int intFocusOnObject = 0;
 
     // shoot variables 
-    [SerializeField] private float shootCoolDown;
     private float shootCoolDownTimer;
     private bool abilityToFire = false;
 
@@ -42,12 +41,16 @@ public class WeaponControllerEnemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+    public void SetWeaponRange(float range)
+    {
+        weaponRadius = range;
+    }
 
     // See radius
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(parent.position, radius);
+        Gizmos.DrawWireSphere(parent.position, weaponRadius);
     }
     private void Update()
     {
@@ -65,7 +68,7 @@ public class WeaponControllerEnemy : MonoBehaviour
                 prevNumberOfColliders = numberOfColliders;
             }
 
-            numberOfColliders = Physics.OverlapSphereNonAlloc(parent.position, radius, hitCollider, layerToHit);
+            numberOfColliders = Physics.OverlapSphereNonAlloc(parent.position, weaponRadius, hitCollider, layerToHit);
 
             SortArrayByDistends();
             FocusObject();
@@ -124,10 +127,9 @@ public class WeaponControllerEnemy : MonoBehaviour
         // if player is focus fire 
         if (focusObject != null)
         {
-            if (abilityToFire && focusObject != null)
+            if (abilityToFire && focusObject != null && !weaponFire.isReloading)
             {
                 weaponFire.ActivateRocket(focusObject);
-                canReload = true;
                 FireCoolDown();
             }
         }
@@ -138,7 +140,7 @@ public class WeaponControllerEnemy : MonoBehaviour
         if (abilityToFire)
         {
             abilityToFire = false;
-            shootCoolDownTimer = shootCoolDown;
+            shootCoolDownTimer = weaponFire.getShotCoolDown;
         }
     }
 

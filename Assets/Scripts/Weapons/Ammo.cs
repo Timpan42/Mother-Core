@@ -12,6 +12,6 @@ public class Ammo : ScriptableObject
     [Range(1f, 1000f)]
     public float speed = 100f;
 
-    [Range(1f, 100f)]
-    public float damage = 25f;
+    [Range(0f, 100f)]
+    public float damage = 0f;
 }

@@ -15,4 +15,4 @@ MonoBehaviour:
   AmmoName: Rocket
   AmmoID: 0
   speed: 20
-  damage: 25
+  damage: 0

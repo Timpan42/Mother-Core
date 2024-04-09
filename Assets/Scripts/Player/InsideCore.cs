@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 public class InsideCore : MonoBehaviour
 {
-    [SerializeField] private float damage;
+    [SerializeField] private float coreDamage;
     [SerializeField] private int damageTimer;
     [SerializeField] CorePower corePower;
     [SerializeField] private LayerMask layerToHit;
@@ -17,6 +17,11 @@ public class InsideCore : MonoBehaviour
     private bool activeCore = false;
     private Collider[] hitCollider = new Collider[10];
     private int numberOfColliders;
+
+    public void UpdateCoreDamage(float damage)
+    {
+        coreDamage = damage;
+    }
 
     public void ActivateTheCore()
     {
@@ -78,6 +83,6 @@ public class InsideCore : MonoBehaviour
     }
     private void DamageObject(HealthScript collisionObjectHealthScript)
     {
-        collisionObjectHealthScript.RemoveHealth(damage);
+        collisionObjectHealthScript.RemoveHealth(coreDamage);
     }
 }
