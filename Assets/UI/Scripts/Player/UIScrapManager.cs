@@ -10,10 +10,11 @@ public class UIScrapManager : MonoBehaviour
     [SerializeField] private GameObject player;
     private bool isAlive = true;
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(TrackScarp());
     }
+
     private IEnumerator TrackScarp()
     {
         float scrapAmount = -1f;

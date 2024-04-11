@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ScrapMoney : MonoBehaviour
 {
-    private int scrap = 0;
+    private int scrap = 1000;
     public int getScrap { get => scrap; }
 
     public void AddScrap(int scrapAmount)
