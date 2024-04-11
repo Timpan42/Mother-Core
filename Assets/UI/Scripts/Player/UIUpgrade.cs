@@ -63,7 +63,14 @@ public class UIUpgrade : MonoBehaviour
         temporaryList = statsUpgrade.UpgradeInformation[name];
 
         statText.text = "" + temporaryList[0];
-        increaseText.text = "" + temporaryList[1];
+        if (temporaryList[1] == temporaryList[0])
+        {
+            increaseText.text = "" + (temporaryList[0] + temporaryList[1]);
+        }
+        else
+        {
+            increaseText.text = "" + temporaryList[1];
+        }
         costText.text = "SC: " + temporaryList[2];
     }
     private TextMeshProUGUI GetCostText(Transform upgradeCostText)

@@ -15,10 +15,11 @@ public class WeaponControllerEnemy : MonoBehaviour
 
     private float weaponRadius;
     private float distanceFromPlayer;
+
+    //colliders
     private Collider[] hitCollider = new Collider[1];
     private int numberOfColliders;
     private int prevNumberOfColliders;
-    private bool combatMode = false;
 
     // focus variables 
     private bool switchFocusTarget = true;
@@ -55,16 +56,14 @@ public class WeaponControllerEnemy : MonoBehaviour
     private void Update()
     {
         ReloadWeaponHolder();
+        CalculateDistanceFromPlayer();
 
-
-        // activate when player is (value) away
-        distanceFromPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceFromPlayer < minimalDistends)
+        if (!isOutOfCombat)
         {
-            combatMode = true;
+            canReload = true;
             if (prevNumberOfColliders != numberOfColliders)
             {
-                //ClearArrayOnObjectExit();
+                ClearArrayOnObjectExit();
                 prevNumberOfColliders = numberOfColliders;
             }
 
@@ -74,31 +73,29 @@ public class WeaponControllerEnemy : MonoBehaviour
             FocusObject();
             FireAtTarget();
         }
-        else
-        {
-            combatMode = false;
-        }
-        ReloadTimer();
         ShootTimer();
     }
 
 
-    private void ReloadTimer()
-    {
-        if (!isOutOfCombat)
-        {
-            outOfCombatTimer -= Time.deltaTime;
-        }
-        if (outOfCombatTimer < 0)
-        {
-            isOutOfCombat = true;
-        }
-    }
     private void ReloadWeaponHolder()
     {
         if (canReload && isOutOfCombat)
         {
             weaponFire.Reload();
+            canReload = false;
+        }
+    }
+
+    private void CalculateDistanceFromPlayer()
+    {
+        distanceFromPlayer = Vector3.Distance(transform.position, player.position);
+        if (distanceFromPlayer < minimalDistends)
+        {
+            isOutOfCombat = false;
+        }
+        else
+        {
+            isOutOfCombat = true;
         }
     }
 

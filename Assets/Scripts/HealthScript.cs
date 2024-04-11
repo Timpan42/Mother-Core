@@ -8,6 +8,8 @@ public class HealthScript : MonoBehaviour
 {
     private float maxHealth;
     private float currentHealth;
+    [SerializeField] private ScrapMoney scrapMoney;
+    [SerializeField] private EnemyStats enemyStats;
     public float getMaxHealth { get => maxHealth; }
     public float getHealth { get => currentHealth; }
 
@@ -31,6 +33,10 @@ public class HealthScript : MonoBehaviour
 
     private void ObjectIsDead()
     {
+        if (transform.CompareTag("Enemy"))
+        {
+            scrapMoney.AddScrap(enemyStats.scarpValue);
+        }
         gameObject.SetActive(false);
     }
 }

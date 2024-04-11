@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyName: TestEnemy
   EnemyID: 1
+  scarpValue: 2
   Hp: 1
   WeaponDamage: 0
   WeaponRange: 0

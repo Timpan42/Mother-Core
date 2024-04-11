@@ -39,6 +39,7 @@ public class CalculateStatsUpgrade : MonoBehaviour
     private HealthScript healthScript;
     private RotatePlayer rotatePlayer;
     private PlayerMovement playerMovement;
+    private ScrapMoney scrapMoney;
     private WeaponFire weaponFire;
     private WeaponController weaponController;
     private InsideCore insideCore;
@@ -50,6 +51,7 @@ public class CalculateStatsUpgrade : MonoBehaviour
         healthScript = transform.GetComponent<HealthScript>();
         rotatePlayer = transform.GetComponent<RotatePlayer>();
         playerMovement = transform.GetComponent<PlayerMovement>();
+        scrapMoney = transform.GetComponent<ScrapMoney>();
         weaponFire = transform.GetComponentInChildren<WeaponFire>();
         weaponController = transform.GetComponentInChildren<WeaponController>();
         insideCore = transform.GetComponentInChildren<InsideCore>();
@@ -76,59 +78,106 @@ public class CalculateStatsUpgrade : MonoBehaviour
         switch (upgrade)
         {
             case "Hp":
-                stat = UpgradeInformation[upgrade][0] + HpIncrease;
-                increaseStat = stat + HpIncrease;
-                cost = UpgradeInformation[upgrade][2] + HpIncreaseCost;
+                if (!CheckIfCanBuyUpgrade(UpgradeInformation[upgrade][2]))
+                {
+                    upgraded = false;
+                    break;
+                }
+                else
+                {
+                    stat = UpgradeInformation[upgrade][0] + HpIncrease;
+                    increaseStat = stat + HpIncrease;
+                    cost = UpgradeInformation[upgrade][2] + HpIncreaseCost;
 
-                Hp = shipStats.Hp + (int)stat;
-                UpdateHp();
-                break;
+                    Hp = shipStats.Hp + (int)stat;
+                    UpdateHp();
+                    break;
+                }
 
             case "WeaponDamage":
-                stat = UpgradeInformation[upgrade][0] + WeaponDamageIncrease;
-                increaseStat = stat + WeaponDamageIncrease;
-                cost = UpgradeInformation[upgrade][2] + WeaponDamageIncreaseCost;
+                if (!CheckIfCanBuyUpgrade(UpgradeInformation[upgrade][2]))
+                {
+                    upgraded = false;
+                    break;
+                }
+                else
+                {
+                    stat = UpgradeInformation[upgrade][0] + WeaponDamageIncrease;
+                    increaseStat = stat + WeaponDamageIncrease;
+                    cost = UpgradeInformation[upgrade][2] + WeaponDamageIncreaseCost;
 
-                WeaponDamage = shipStats.WeaponDamage + stat;
-                UpdateWeaponDamage();
-                break;
+                    WeaponDamage = shipStats.WeaponDamage + stat;
+                    UpdateWeaponDamage();
+                    break;
+                }
 
             case "WeaponRange":
-                stat = UpgradeInformation[upgrade][0] + WeaponRangeIncrease;
-                increaseStat = stat + WeaponRangeIncrease;
-                cost = UpgradeInformation[upgrade][2] + WeaponRangeIncreaseCost;
+                if (!CheckIfCanBuyUpgrade(UpgradeInformation[upgrade][2]))
+                {
+                    upgraded = false;
+                    break;
+                }
+                else
+                {
+                    stat = UpgradeInformation[upgrade][0] + WeaponRangeIncrease;
+                    increaseStat = stat + WeaponRangeIncrease;
+                    cost = UpgradeInformation[upgrade][2] + WeaponRangeIncreaseCost;
 
-                WeaponRange = shipStats.WeaponRange + stat;
-                UpdateWeaponRange();
-                break;
+                    WeaponRange = shipStats.WeaponRange + stat;
+                    UpdateWeaponRange();
+                    break;
+                }
 
             case "ShipSpeed":
-                stat = UpgradeInformation[upgrade][0] + ShipSpeedIncrease;
-                increaseStat = stat + ShipSpeedIncrease;
-                cost = UpgradeInformation[upgrade][2] + ShipSpeedIncreaseCost;
+                if (!CheckIfCanBuyUpgrade(UpgradeInformation[upgrade][2]))
+                {
+                    upgraded = false;
+                    break;
+                }
+                else
+                {
+                    stat = UpgradeInformation[upgrade][0] + ShipSpeedIncrease;
+                    increaseStat = stat + ShipSpeedIncrease;
+                    cost = UpgradeInformation[upgrade][2] + ShipSpeedIncreaseCost;
 
-                ShipSpeed = shipStats.ShipSpeed + stat;
-                UpdateSpeed();
-                break;
+                    ShipSpeed = shipStats.ShipSpeed + stat;
+                    UpdateSpeed();
+                    break;
+                }
 
             case "ShipTurnRate":
-                stat = UpgradeInformation[upgrade][0] + ShipTurnRateIncrease;
-                increaseStat = stat + ShipTurnRateIncrease;
-                cost = UpgradeInformation[upgrade][2] + ShipTurnRateIncreaseCost;
+                if (!CheckIfCanBuyUpgrade(UpgradeInformation[upgrade][2]))
+                {
+                    upgraded = false;
+                    break;
+                }
+                else
+                {
+                    stat = UpgradeInformation[upgrade][0] + ShipTurnRateIncrease;
+                    increaseStat = stat + ShipTurnRateIncrease;
+                    cost = UpgradeInformation[upgrade][2] + ShipTurnRateIncreaseCost;
 
-                ShipTurnRate = shipStats.ShipTurnRate + stat;
-                UpdateRotationSpeed();
-                break;
+                    ShipTurnRate = shipStats.ShipTurnRate + stat;
+                    UpdateRotationSpeed();
+                    break;
+                }
 
             case "CoreDamage":
-                stat = UpgradeInformation[upgrade][0] + CoreDamageIncrease;
-                increaseStat = stat + CoreDamageIncrease;
-                cost = UpgradeInformation[upgrade][2] + CoreDamageIncreaseCost;
+                if (!CheckIfCanBuyUpgrade(UpgradeInformation[upgrade][2]))
+                {
+                    upgraded = false;
+                    break;
+                }
+                else
+                {
+                    stat = UpgradeInformation[upgrade][0] + CoreDamageIncrease;
+                    increaseStat = stat + CoreDamageIncrease;
+                    cost = UpgradeInformation[upgrade][2] + CoreDamageIncreaseCost;
 
-                CoreDamage = shipStats.CoreDamage + stat;
-                UpdateCoreDamage();
-                break;
-
+                    CoreDamage = shipStats.CoreDamage + stat;
+                    UpdateCoreDamage();
+                    break;
+                }
             default:
                 upgraded = false;
                 Debug.Log("no upgrade");
@@ -155,6 +204,17 @@ public class CalculateStatsUpgrade : MonoBehaviour
         UpdateWeaponDamage();
         UpdateWeaponRange();
         UpdateCoreDamage();
+    }
+
+    private bool CheckIfCanBuyUpgrade(float cost)
+    {
+        bool canBuy = false;
+        if (scrapMoney.getScrap >= cost)
+        {
+            canBuy = true;
+            scrapMoney.RemoveScrap((int)cost);
+        }
+        return canBuy;
     }
 
     private void UpgradeInformationUpdate(string name, float stat, float increaseStat, float cost)

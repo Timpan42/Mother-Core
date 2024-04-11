@@ -9,6 +9,7 @@ public class EnemyStats : ScriptableObject
 {
     public string EnemyName;
     public int EnemyID;
+    public int scarpValue;
     public int Hp;
     public float WeaponDamage;
     public float WeaponRange;
